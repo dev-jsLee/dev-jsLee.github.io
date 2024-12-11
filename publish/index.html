@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>주컴 페이지</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        nav {
+            margin-bottom: 20px;
+        }
+        nav a {
+            margin-right: 15px;
+            text-decoration: none;
+            color: blue;
+        }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            fetch('folders.json')
+                .then(response => response.json())
+                .then(data => {
+                    const nav = document.querySelector('nav');
+                    data.forEach(folder => {
+                        const link = document.createElement('a');
+                        link.href = folder.path;
+                        link.textContent = folder.name;
+                        nav.appendChild(link);
+                    });
+                })
+                .catch(error => console.error('Error loading folder list:', error));
+        });
+    </script>
+</head>
+<body>
+    <header>
+        <h1>옵시디언 Vault 데이터</h1>
+    </header>
+    <nav>
+        <!-- 주제별 링크가 여기에 동적으로 추가됩니다. -->
+    </nav>
+    <main>
+        <p>각 주제별로 정리된 데이터를 확인하세요.</p>
+    </main>
+</body>
+</html> 

@@ -1,0 +1,10 @@
+[
+    {
+        "name": "Java",
+        "path": ".\\publish\\Java\\index.html"
+    },
+    {
+        "name": "Python",
+        "path": ".\\publish\\Python\\index.html"
+    }
+]
