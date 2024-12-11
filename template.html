@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>옵시디언 Vault 데이터</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        nav {
+            margin-bottom: 20px;
+        }
+        nav a {
+            margin-right: 15px;
+            text-decoration: none;
+            color: blue;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>옵시디언 Vault 데이터</h1>
+    </header>
+    <nav id="dynamic-links">
+    </nav>
+    <main>
+        <p>각 주제별로 정리된 데이터를 확인하세요.</p>
+    </main>
+    <script>
+        // JSON 파일 경로
+        const jsonFilePath = 'folders.json';
+
+        // JSON 파일을 가져와서 링크 생성
+        fetch(jsonFilePath)
+            .then(response => response.json())
+            .then(data => {
+                const nav = document.getElementById('dynamic-links');
+                data.forEach(file => {
+                    const link = document.createElement('a');
+                    link.href = file.path; // JSON에서 경로 추출
+                    link.textContent = file.name; // JSON에서 이름 추출
+                    nav.appendChild(link);
+                });
+            })
+            .catch(error => console.error('JSON 파일을 가져오는 중 오류 발생:', error));
+    </script>
+</body>
+</html> 
