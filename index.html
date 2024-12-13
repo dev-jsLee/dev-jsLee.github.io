@@ -3,21 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>페이지 1</title>
-    <script>
-        // 템플릿 로드
-        window.onload = function() {
-            fetch('template.html')
-                .then(response => response.text())
-                .then(template => {
-                    document.body.innerHTML = template;
-                    // 페이지 1에 대한 추가 내용
-                    const main = document.querySelector('main');
-                    main.innerHTML += '<p>페이지 1의 내용입니다.</p>';
-                });
-        };
-    </script>
+    <title>주제 목록</title>
 </head>
 <body>
+    <header>
+        <h1>주제 목록</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href=".\publish\index.html">publish</a></li>
+        </ul>
+    </nav>
 </body>
 </html>

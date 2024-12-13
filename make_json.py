@@ -1,6 +1,9 @@
 import json
 import os
 
+index_json_file_name = "index.json"
+data_json_file_name = "data.json"
+
 def load_ignore_list(directory):
     ignore_file_path = os.path.join(directory, '.ignore')
     ignore_list = set()
@@ -26,7 +29,7 @@ def load_ignore_list(directory):
 
 def generate_file_list(directory, ignore_list: set):
     files = []
-    ignore_list.update(["files.json", "folders.json", "index.html"])
+    ignore_list.update([data_json_file_name, index_json_file_name, "index.html"])
     
     # 현재 디렉토리 내의 파일만 탐색
     for filename in os.listdir(directory):
@@ -64,7 +67,7 @@ def generate_folders_list(directory, ignore_list):
             })
     
     # 폴더가 존재할 경우에만 JSON 파일로 저장
-    folders_file_path = os.path.join(directory, 'folders.json')
+    folders_file_path = os.path.join(directory, 'index.json')
     if folders:
         with open(folders_file_path, 'w', encoding='utf-8') as json_file:
             json.dump(folders, json_file, ensure_ascii=False, indent=4)
