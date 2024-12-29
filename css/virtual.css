@@ -1,0 +1,10 @@
+ul.menubar>li:hover {
+    background-color: rgb(115, 228, 191);
+    transition-duration: 0.5s;
+}
+
+#footer img:hover {
+    filter: invert(100%);
+    transition-duration: 0.5s;
+    transition-timing-function: ease-out;
+}

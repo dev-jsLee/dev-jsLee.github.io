@@ -3,9 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>test page</title>
+    <title>Document</title>
+    <!-- common.css는 이 프로젝트의 모든 페이지에
+        공통으로 적용할 css를 정의한다.-->
+    <link rel="stylesheet" href="css/common.css">
+    <!-- index.css는 현재 있는 이 index.html만의
+        css를 정의한다.-->
+    <link rel="stylesheet" href="css/index.css">
+    <!-- index.css를 아래에 정의함으로써, 공통 css보다
+        높은 우선순위를 가지게 된다. -->
+    <link rel="stylesheet" href="css/virtual.css">
 </head>
 <body>
-    
+    <div id="container">
+        <div class="nav-container fixed">
+            <nav id="navigation">
+                <div class="nav-left-box">
+                    <ul id="left_box_ul" class="menubar">
+                        <li><p>Home</p></li>
+                        <li><p>idex</p></li>
+                        <li><p>List</p></li>
+                    </ul>
+                </div>
+                <div class="nav-mid-box" hidden></div>
+                <div class="nav-right-box">
+                    <ul id="right_box_ul" class="menubar">
+                        <li>
+                            <p></p>
+                        </li>
+                        <li>
+                            <p></p>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        <header id="header">header</header>
+        <div id="content">
+            <aside id="sidebar">
+                <!-- 보통 목차를 넣는다. -->
+            </aside>
+            <!-- 메인 컨테이너는
+                말 그대로 메인 컨텐츠가 들어갈 공간이다.
+            -->
+            <main id="main">
+                <!-- 섹션은 컨텐츠 내 공간을 분리하기 위한 시맨틱 태그 -->
+                <section>
+                    <ul>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                    </ul>
+                </section>
+            </main>
+        </div>
+        <footer id="footer">
+            <section id="footer-left"><p>Created by Menual</p></section>
+            <section id="footer-right">
+                <a href="https://github.com/dev-jsLee/dev-jsLee.github.io">
+                    <img src="resource/github_icon_128.png" alt="">
+                </a>
+            </section>
+        </footer>
+    </div>
 </body>
 </html>

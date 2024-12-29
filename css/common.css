@@ -1,0 +1,16 @@
+.fixed {
+    position: fixed !important;
+}
+
+.inline_block{
+    display: inline-block !important;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+p {
+    margin: 0;
+}
