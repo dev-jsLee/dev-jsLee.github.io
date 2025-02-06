@@ -4,12 +4,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>나만의 Github Pages 만들기</title>
+    <!-- common.css는 모든 페이지에서 공통으로 쓰이는
+    css를 정의해두는 파일이다.
+    각각의 페이지에 적용하는 것보다 우선순위를 낮춰야 하기 때문에
+    link css 중 가장 먼저 입력한다.
+    -->
+    <link rel="stylesheet" href="./css/common.css">
+    <!-- 일부 페이지들이 공유하는 css 정의-->
+    <!-- link:css -->
+    <!-- 현재 index 페이지에만 적용하고자 하는 css만
+    정의하는 css 파일-->
+    <link rel="stylesheet" href="./css/index.css">
 </head>
 <body>
-    <div class="container">
-        <header>헤더입니다.</header>
-        <main>메인입니다.</main>
-        <footer>푸터입니다.</footer>
+    <div id="container" class="flex_container">
+        <nav id="nav_bar" class="flex_item inline-block">
+            <!-- 다른 페이지로 넘어갈 수 있는
+            하이퍼링크를 박스 형태로 나열하는 구조
+            -->
+            <div class="nav_container flex_container">
+                <div class="nav_item">
+                    <a href=""></a>
+                </div>
+                <div class="nav_item"></div>
+                <div class="nav_item"></div>
+                <div class="nav_item"></div>
+            </div>
+        </nav>
+        <main id="main_container" class="flex_item inline-block">
+            <header hidden></header>
+            <content class="grid_content" id="gridBtns">
+                <div class="square round_margin10"></div>
+                <div class="square round_margin10"></div>
+                <div class="square round_margin10"></div>
+                <div class="square round_margin10"></div>
+            </content>
+        </main>
     </div>
 </body>
 </html>

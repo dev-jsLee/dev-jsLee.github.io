@@ -1,0 +1,12 @@
+/*
+common.css
+모든 웹페이지에서 공유하는 스타일시트 정보를 정의하는 파일
+*/
+
+.inline-block {
+    display: inline-block;
+}
+
+.flex_container {
+    display: flex;
+}
