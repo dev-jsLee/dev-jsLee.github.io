@@ -1,0 +1,103 @@
+{
+  "timeline_index": 37,
+  "planner": {
+    "Team Leader": {
+      "1": {
+        "task_id": "1",
+        "dependent_task_ids": [],
+        "instruction": "Create a PRD for the personal markdown wiki system with the following features:\n1. User authentication using Supabase\n2. Markdown editor with preview\n3. Graph view of note connections using vis.js\n4. Local storage sync with Supabase\n5. Import/Export functionality\n6. Dark/Light mode\n7. Note organization (tags, search, etc.)",
+        "task_type": "general",
+        "code": "",
+        "result": "",
+        "is_success": false,
+        "is_finished": true,
+        "assignee": "Emma",
+        "start_at": 1743573255.6671598,
+        "end_at": 1743573352.2088845
+      },
+      "current_task_id": "3",
+      "2": {
+        "task_id": "2",
+        "dependent_task_ids": [
+          "1"
+        ],
+        "instruction": "Design the system architecture including:\n1. Frontend components structure\n2. Supabase data models\n3. Authentication flow\n4. State management\n5. API endpoints\n6. Data sync mechanism",
+        "task_type": "general",
+        "code": "",
+        "result": "",
+        "is_success": false,
+        "is_finished": true,
+        "assignee": "Bob",
+        "start_at": 1743573352.2089188,
+        "end_at": 1743573436.7350788
+      },
+      "3": {
+        "task_id": "3",
+        "dependent_task_ids": [
+          "2"
+        ],
+        "instruction": "Implement the personal markdown wiki system using:\n- React for frontend\n- Supabase for backend and authentication\n- marked.js for markdown parsing\n- vis.js for graph visualization\n- Tailwind CSS for styling",
+        "task_type": "general",
+        "code": "",
+        "result": "",
+        "is_success": false,
+        "is_finished": true,
+        "assignee": "Alex",
+        "start_at": 1743573436.7351122,
+        "end_at": 1743573665.42005
+      }
+    }
+  },
+  "gallery_last_file": {},
+  "timeline_status": {
+    "1": 1,
+    "2": 1,
+    "3": 1,
+    "4": 1,
+    "5": 1,
+    "6": 1,
+    "7": 1,
+    "8": 1,
+    "9": 1,
+    "10": 1,
+    "11": 1,
+    "12": 1,
+    "13": 1,
+    "14": 1,
+    "15": 1,
+    "16": 1,
+    "17": 1,
+    "19": 1,
+    "20": 1,
+    "21": 1,
+    "22": 1,
+    "23": 1,
+    "24": 1,
+    "25": 1,
+    "26": 1,
+    "27": 1,
+    "28": 1,
+    "29": 1,
+    "30": 1,
+    "31": 1,
+    "32": 1,
+    "33": 1,
+    "34": 1,
+    "35": 0,
+    "36": 1,
+    "37": 1
+  },
+  "preview_servers": {
+    "435303a3-8afe-4a97-8f4a-90c2687b5263": {
+      "role": "Alex",
+      "port": 5173,
+      "subdomain": "personal-wiki-igap7d-ex42dd-7b5263",
+      "server": "c4788cff-0f2e-4354-83a6-0b59486220cc",
+      "cmd": "pnpm run lint && pnpm run dev",
+      "timeline_index": 35,
+      "status": "success",
+      "logs": []
+    }
+  },
+  "deploy": {}
+}
