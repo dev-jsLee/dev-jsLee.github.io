@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TAMS - 보충지도 관리 시스템</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/pages.css">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@0.294.0/dist/umd/lucide.min.js"></script>
+    
+    <style>
+        /* Landing Page Styles */
+        .landing-hero {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: var(--spacing-12) var(--spacing-6);
+            text-align: center;
+            margin-bottom: var(--spacing-12);
+        }
+        
+        .landing-hero h1 {
+            font-size: var(--font-size-3xl);
+            font-weight: 700;
+            margin-bottom: var(--spacing-4);
+        }
+        
+        .landing-hero p {
+            font-size: var(--font-size-lg);
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .landing-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-6);
+        }
+        
+        .role-section {
+            margin-bottom: var(--spacing-12);
+        }
+        
+        .role-header {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-3);
+            margin-bottom: var(--spacing-6);
+            padding-bottom: var(--spacing-4);
+            border-bottom: 2px solid var(--border-color);
+        }
+        
+        .role-header h2 {
+            font-size: var(--font-size-2xl);
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+        
+        .role-header .role-icon {
+            width: 2rem;
+            height: 2rem;
+            color: var(--primary-color);
+        }
+        
+        .role-description {
+            color: var(--gray-600);
+            margin-bottom: var(--spacing-6);
+            line-height: 1.6;
+        }
+        
+        .page-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--spacing-4);
+        }
+        
+        .page-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: var(--spacing-6);
+            box-shadow: var(--shadow);
+            transition: all 0.3s;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            border: 2px solid transparent;
+        }
+        
+        .page-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary-color);
+        }
+        
+        .page-card-header {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-3);
+            margin-bottom: var(--spacing-3);
+        }
+        
+        .page-card-icon {
+            width: 1.5rem;
+            height: 1.5rem;
+            color: var(--primary-color);
+        }
+        
+        .page-card-title {
+            font-size: var(--font-size-lg);
+            font-weight: 600;
+            color: var(--gray-900);
+        }
+        
+        .page-card-description {
+            color: var(--gray-600);
+            font-size: var(--font-size-sm);
+            line-height: 1.5;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: var(--spacing-8) var(--spacing-6);
+            color: var(--gray-600);
+            border-top: 1px solid var(--border-color);
+            margin-top: var(--spacing-12);
+        }
+        
+        .login-link {
+            display: inline-block;
+            margin-top: var(--spacing-6);
+            padding: var(--spacing-3) var(--spacing-6);
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            text-decoration: none;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            transition: all 0.3s;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .login-link:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        @media (max-width: 768px) {
+            .landing-hero {
+                padding: var(--spacing-8) var(--spacing-4);
+            }
+            
+            .landing-hero h1 {
+                font-size: var(--font-size-2xl);
+            }
+            
+            .page-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .role-header h2 {
+                font-size: var(--font-size-xl);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <div class="landing-hero">
+        <h1>📚 TAMS</h1>
+        <p>보충지도 관리 시스템 (Tutor Appointment Management System)</p>
+        <p style="margin-top: var(--spacing-4); font-size: var(--font-size-base);">
+            조교와 학생 간의 보충지도 일정을 효율적으로 관리하는 통합 시스템입니다.
+        </p>
+        <a href="html/login.html" class="login-link">로그인 페이지로 이동</a>
+    </div>
+    
+    <div class="landing-container">
+        <!-- Admin Section -->
+        <div class="role-section">
+            <div class="role-header">
+                <i data-lucide="shield" class="role-icon"></i>
+                <h2>관리자 (Admin)</h2>
+            </div>
+            <p class="role-description">
+                시스템 전체를 관리하고 모니터링할 수 있는 관리자 전용 페이지입니다. 
+                사용자, 조교, 과목, 일정 등을 통합 관리할 수 있습니다.
+            </p>
+            <div class="page-grid">
+                <a href="html/admin/dashboard.html" class="page-card">
+                    <div class="page-card-header">
+                        <i data-lucide="layout-dashboard" class="page-card-icon"></i>
+                        <div class="page-card-title">대시보드</div>
+                    </div>
+                    <div class="page-card-description">
+                        시스템 전체 현황을 한눈에 확인할 수 있는 대시보드입니다.
+                    </div>
+                </a>
+                
+                <a href="html/admin/users.html" class="page-card">
+                    <div class="page-card-header">
+                        <i data-lucide="users" class="page-card-icon"></i>
+                        <div class="page-card-title">사용자 관리</div>
+                    </div>
+                    <div class="page-card-description">
+                        멘토와 튜터 등 모든 사용자를 관리합니다.
+                    </div>
+                </a>
+                
+                <a href="html/admin/tutors.html" class="page-card">
+                    <div class="page-card-header">
+                        <i data-lucide="user-check" class="page-card-icon"></i>
+                        <div class="page-card-title">조교 관리</div>
+                    </div>
+                    <div class="page-card-description">
+                        조교 정보와 담당 과목을 관리합니다.
+                    </div>
+                </a>
+                
+                <a href="html/admin/subjects.html" class="page-card">
+                    <div class="page-card-header">
+                        <i data-lucide="book-open" class="page-card-icon"></i>
+                        <div class="page-card-title">과목 관리</div>
+                    </div>
+                    <div class="page-card-description">
+                        보충지도 과목을 추가, 수정, 삭제합니다.
+                    </div>
+                </a>
+                
+                <a href="html/admin/schedules.html" class="page-card">
+                    <div class="page-card-header">
+                        <i data-lucide="calendar" class="page-card-icon"></i>
+                        <div class="page-card-title">일정 관리</div>
+                    </div>
+                    <div class="page-card-description">
+                        전체 일정을 조회하고 관리합니다.
+                    </div>
+                </a>
+                
+                <a href="html/admin/statistics.html" class="page-card">
+                    <div class="page-card-header">
+                        <i data-lucide="bar-chart-3" class="page-card-icon"></i>
+                        <div class="page-card-title">통계</div>
+                    </div>
+                    <div class="page-card-description">
+                        보충지도 통계와 분석 데이터를 확인합니다.
+                    </div>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Mentor Section -->
+        <div class="role-section">
+            <div class="role-header">
+                <i data-lucide="graduation-cap" class="role-icon"></i>
+                <h2>멘토 (Mentor)</h2>
+            </div>
+            <p class="role-description">
+                학생들의 보충지도를 신청하고 관리하는 멘토 전용 페이지입니다. 
+                조교 일정을 확인하고 보충 신청을 할 수 있습니다.
+            </p>
+            <div class="page-grid">
+                <a href="html/mentor/dashboard.html" class="page-card">
+                    <div class="page-card-header">
+                        <i data-lucide="layout-dashboard" class="page-card-icon"></i>
+                        <div class="page-card-title">대시보드</div>
+                    </div>
+                    <div class="page-card-description">
+                        내 보충 신청 현황과 통계를 확인합니다.
+                    </div>
+                </a>
+                
+                <a href="html/mentor/schedule.html" class="page-card">
+                    <div class="page-card-header">
+                        <i data-lucide="calendar" class="page-card-icon"></i>
+                        <div class="page-card-title">보충 신청</div>
+                    </div>
+                    <div class="page-card-description">
+                        조교 일정을 확인하고 보충 신청을 합니다.
+                    </div>
+                </a>
+                
+                <a href="html/mentor/appointments.html" class="page-card">
+                    <div class="page-card-header">
+                        <i data-lucide="calendar-check" class="page-card-icon"></i>
+                        <div class="page-card-title">신청 내역</div>
+                    </div>
+                    <div class="page-card-description">
+                        내가 신청한 보충지도 일정을 확인합니다.
+                    </div>
+                </a>
+                
+                <a href="html/mentor/students.html" class="page-card">
+                    <div class="page-card-header">
+                        <i data-lucide="users" class="page-card-icon"></i>
+                        <div class="page-card-title">학생 관리</div>
+                    </div>
+                    <div class="page-card-description">
+                        담당 학생 목록을 관리합니다.
+                    </div>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Tutor Section -->
+        <div class="role-section">
+            <div class="role-header">
+                <i data-lucide="user" class="role-icon"></i>
+                <h2>조교 (Tutor)</h2>
+            </div>
+            <p class="role-description">
+                보충지도 일정을 관리하고 신청을 승인하는 조교 전용 페이지입니다. 
+                내 일정을 등록하고 보충 신청을 확인할 수 있습니다.
+            </p>
+            <div class="page-grid">
+                <a href="html/tutor/dashboard.html" class="page-card">
+                    <div class="page-card-header">
+                        <i data-lucide="layout-dashboard" class="page-card-icon"></i>
+                        <div class="page-card-title">대시보드</div>
+                    </div>
+                    <div class="page-card-description">
+                        내 보충지도 현황과 통계를 확인합니다.
+                    </div>
+                </a>
+                
+                <a href="html/tutor/calendar.html" class="page-card">
+                    <div class="page-card-header">
+                        <i data-lucide="calendar" class="page-card-icon"></i>
+                        <div class="page-card-title">일정 관리</div>
+                    </div>
+                    <div class="page-card-description">
+                        보충지도 가능한 시간을 등록하고 관리합니다.
+                    </div>
+                </a>
+                
+                <a href="html/tutor/pending.html" class="page-card">
+                    <div class="page-card-header">
+                        <i data-lucide="clock" class="page-card-icon"></i>
+                        <div class="page-card-title">대기 중인 신청</div>
+                    </div>
+                    <div class="page-card-description">
+                        승인 대기 중인 보충 신청을 확인하고 처리합니다.
+                    </div>
+                </a>
+                
+                <a href="html/tutor/settings.html" class="page-card">
+                    <div class="page-card-header">
+                        <i data-lucide="settings" class="page-card-icon"></i>
+                        <div class="page-card-title">설정</div>
+                    </div>
+                    <div class="page-card-description">
+                        프로필과 담당 과목을 관리합니다.
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <div class="footer">
+        <p>TAMS - Tutor Appointment Management System</p>
+        <p style="margin-top: var(--spacing-2); font-size: var(--font-size-sm);">
+            보충지도 관리 시스템 데모 페이지
+        </p>
+    </div>
+    
+    <!-- Initialize Lucide Icons -->
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
+
