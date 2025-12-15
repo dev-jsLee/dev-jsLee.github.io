@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>통계 - TAMS</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="../../css/base.css">
+    <link rel="stylesheet" href="../../css/pages.css">
+    
+    <!-- Day.js -->
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.10/dayjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.10/locale/ko.js"></script>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@0.294.0/dist/umd/lucide.min.js"></script>
+    
+    <!-- Fragment Loader -->
+    <script src="../../js/fragment-loader.js"></script>
+    
+    <!-- Debug -->
+    <script src="../../js/debug.js"></script>
+</head>
+<body>
+    <!-- Debug Panel -->
+    <div id="debug-panel-container" data-fragment="../components/debug-panel"></div>
+    
+    <!-- Navigation Bar -->
+    <div id="navbar-container" data-fragment="../components/navbar"></div>
+    
+    <div class="app-container">
+        <!-- Sidebar -->
+        <div id="sidebar-container" data-fragment="../components/sidebar"></div>
+        
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="container">
+                <div class="page-header">
+                    <h1>📊 통계</h1>
+                </div>
+
+                <div class="dashboard-stats">
+                    <div class="stat-card">
+                        <div class="stat-value" id="total-appointments">0</div>
+                        <div class="stat-label">이번 달 신청</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="completed-appointments">0</div>
+                        <div class="stat-label">완료된 보충</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="active-tutors">0</div>
+                        <div class="stat-label">활성 조교</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="active-mentors">0</div>
+                        <div class="stat-label">활성 멘토</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">이번 달 신청 추이</h3>
+                    </div>
+                    <canvas id="appointments-chart" style="max-height: 400px;"></canvas>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">조교별 업무량</h3>
+                        </div>
+                        <canvas id="tutors-chart"></canvas>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">상태별 신청 분포</h3>
+                        </div>
+                        <canvas id="status-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <!-- Modal -->
+    <div id="modal-container" data-fragment="../components/modal"></div>
+    
+    <!-- Common JavaScript -->
+    <script src="../../js/main.js"></script>
+    
+    <!-- Initialize Lucide Icons -->
+    <script>lucide.createIcons();</script>
+    
+    <!-- Page-specific JavaScript -->
+    <script src="../../js/admin/statistics.js"></script>
+</body>
+</html>

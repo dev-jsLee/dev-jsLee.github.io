@@ -1,0 +1,23 @@
+<!-- 
+  Stat Card Component
+  
+  Usage:
+  <div class="stat-card">
+    <div class="stat-value" data-stat-value="0">0</div>
+    <div class="stat-label">사용자</div>
+  </div>
+  
+  Or create dynamically:
+  createStatCard(100, '사용자', 'stat-id')
+  
+  Parameters:
+  - value: The numeric value to display (default: 0)
+  - label: The label text below the value (required)
+  - id: Optional ID for the value element (for dynamic updates)
+-->
+<template id="stat-card-template">
+    <div class="stat-card">
+        <div class="stat-value"></div>
+        <div class="stat-label"></div>
+    </div>
+</template>

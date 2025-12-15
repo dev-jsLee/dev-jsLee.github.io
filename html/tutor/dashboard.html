@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>조교 대시보드 - TAMS</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="../../css/base.css">
+    <link rel="stylesheet" href="../../css/pages.css">
+    
+    <!-- Day.js -->
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.10/dayjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.10/locale/ko.js"></script>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@0.294.0/dist/umd/lucide.min.js"></script>
+    
+    <!-- Fragment Loader -->
+    <script src="../../js/fragment-loader.js"></script>
+    
+    <!-- Debug -->
+    <script src="../../js/debug.js"></script>
+</head>
+<body>
+    <!-- Debug Panel -->
+    <div id="debug-panel-container" data-fragment="../components/debug-panel"></div>
+    
+    <!-- Navigation Bar -->
+    <div id="navbar-container" data-fragment="../components/navbar"></div>
+    
+    <div class="app-container">
+        <!-- Sidebar -->
+        <div id="sidebar-container" data-fragment="../components/sidebar"></div>
+        
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="container">
+                <div class="page-header">
+                    <h1>👋 안녕하세요, <span data-user-name>사용자</span>님</h1>
+                </div>
+
+                <div class="dashboard-stats">
+                    <div class="stat-card">
+                        <div class="stat-value">0</div>
+                        <div class="stat-label">승인 대기</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">0</div>
+                        <div class="stat-label">오늘 일정</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">0</div>
+                        <div class="stat-label">이번 주 일정</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">0</div>
+                        <div class="stat-label">이번 달 완료</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">빠른 작업</h3>
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                        <a href="pending.html" class="btn btn-warning">
+                            <i data-lucide="bell"></i>
+                            승인 대기
+                        </a>
+                        <a href="calendar.html" class="btn btn-primary">
+                            <i data-lucide="calendar-days"></i>
+                            내 일정
+                        </a>
+                        <a href="settings.html" class="btn btn-secondary">
+                            <i data-lucide="settings"></i>
+                            설정
+                        </a>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">오늘의 일정</h3>
+                    </div>
+                    <div class="empty-state">
+                        <i data-lucide="calendar-check" size="64"></i>
+                        <p>오늘은 일정이 없습니다.</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <!-- Modal -->
+    <div id="modal-container" data-fragment="../components/modal"></div>
+    
+    <!-- Common JavaScript -->
+    <script src="../../js/main.js"></script>
+    
+    <!-- Initialize Lucide Icons -->
+    <script>lucide.createIcons();</script>
+    
+    <!-- Page-specific JavaScript -->
+    <script src="../../js/tutor/dashboard.js"></script>
+</body>
+</html>

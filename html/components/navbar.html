@@ -1,0 +1,28 @@
+<nav class="navbar">
+    <div class="navbar-left">
+        <!-- 햄버거 버튼 (모바일용) -->
+        <button class="navbar-toggle" onclick="toggleSidebar()" aria-label="메뉴 열기">
+            <i data-lucide="menu"></i>
+        </button>
+        <div class="navbar-brand">
+            <i data-lucide="book-open"></i>
+            <h2>TAMS</h2>
+        </div>
+    </div>
+    
+    <!-- 데스크톱 네비게이션 -->
+    <nav class="navbar-nav" data-navbar-nav>
+        <!-- 네비게이션 링크는 JavaScript로 동적으로 추가 -->
+    </nav>
+    
+    <div class="navbar-user">
+        <span class="user-name" data-user-name>사용자</span>
+        <span class="user-role badge" data-user-role>
+            <!-- Role will be set dynamically -->
+        </span>
+        <button class="btn btn-secondary btn-sm" onclick="logout()">
+            <i data-lucide="log-out"></i>
+            <span class="btn-text">로그아웃</span>
+        </button>
+    </div>
+</nav>

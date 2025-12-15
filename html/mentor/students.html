@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>학생 관리 - TAMS</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="../../css/base.css">
+    <link rel="stylesheet" href="../../css/pages.css">
+    
+    <!-- Day.js -->
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.10/dayjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.10/locale/ko.js"></script>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@0.294.0/dist/umd/lucide.min.js"></script>
+    
+    <!-- Fragment Loader -->
+    <script src="../../js/fragment-loader.js"></script>
+    
+    <!-- Debug -->
+    <script src="../../js/debug.js"></script>
+</head>
+<body>
+    <!-- Debug Panel -->
+    <div id="debug-panel-container" data-fragment="../components/debug-panel"></div>
+    
+    <!-- Navigation Bar -->
+    <div id="navbar-container" data-fragment="../components/navbar"></div>
+    
+    <div class="app-container">
+        <!-- Sidebar -->
+        <div id="sidebar-container" data-fragment="../components/sidebar"></div>
+        
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="container">
+                <div class="page-header">
+                    <h1>학생 관리</h1>
+                    <button class="btn btn-primary" onclick="showCreateStudentModal()">
+                        <i data-lucide="plus"></i>
+                        학생 등록
+                    </button>
+                </div>
+
+                <!-- 검색 -->
+                <div class="search-box">
+                    <input 
+                        type="text" 
+                        id="search-input"
+                        placeholder="학생 이름 또는 전화번호 검색"
+                        onkeyup="debounce(filterStudents, 500)()">
+                </div>
+
+                <!-- 학생 목록 -->
+                <div id="student-list">
+                    <div class="empty-state">
+                        <i data-lucide="users" size="64"></i>
+                        <p>학생 정보를 불러오는 중...</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <!-- Modal -->
+    <div id="modal-container" data-fragment="../components/modal"></div>
+    
+    <!-- Common JavaScript -->
+    <script src="../../js/main.js"></script>
+    
+    <!-- Initialize Lucide Icons -->
+    <script>lucide.createIcons();</script>
+    
+    <!-- Page-specific JavaScript -->
+    <script src="../../js/students.js"></script>
+    <script>
+        // 페이지 로드 시 학생 목록 불러오기
+        document.addEventListener('DOMContentLoaded', loadStudents);
+    </script>
+</body>
+</html>

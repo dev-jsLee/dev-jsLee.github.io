@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>조교 관리 - TAMS</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="../../css/base.css">
+    <link rel="stylesheet" href="../../css/pages.css">
+    
+    <!-- Day.js -->
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.10/dayjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.10/locale/ko.js"></script>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@0.294.0/dist/umd/lucide.min.js"></script>
+    
+    <!-- Fragment Loader -->
+    <script src="../../js/fragment-loader.js"></script>
+    
+    <!-- Debug -->
+    <script src="../../js/debug.js"></script>
+</head>
+<body>
+    <!-- Debug Panel -->
+    <div id="debug-panel-container" data-fragment="../components/debug-panel"></div>
+    
+    <!-- Navigation Bar -->
+    <div id="navbar-container" data-fragment="../components/navbar"></div>
+    
+    <div class="app-container">
+        <!-- Sidebar -->
+        <div id="sidebar-container" data-fragment="../components/sidebar"></div>
+        
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="container">
+                <div class="page-header">
+                    <h1>조교 관리</h1>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">조교 목록</h3>
+                    </div>
+                    <div id="tutor-list">
+                        <div class="empty-state">
+                            <i data-lucide="users" size="64"></i>
+                            <p>조교 목록을 불러오는 중...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <!-- Modal -->
+    <div id="modal-container" data-fragment="../components/modal"></div>
+    
+    <!-- Common JavaScript -->
+    <script src="../../js/main.js"></script>
+    
+    <!-- Initialize Lucide Icons -->
+    <script>lucide.createIcons();</script>
+    
+    <!-- Page-specific JavaScript -->
+    <script src="../../js/admin/tutors.js"></script>
+</body>
+</html>

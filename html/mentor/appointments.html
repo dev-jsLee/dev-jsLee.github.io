@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>신청 현황 - TAMS</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="../../css/base.css">
+    <link rel="stylesheet" href="../../css/pages.css">
+    
+    <!-- Day.js -->
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.10/dayjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.10/locale/ko.js"></script>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@0.294.0/dist/umd/lucide.min.js"></script>
+    
+    <!-- Fragment Loader -->
+    <script src="../../js/fragment-loader.js"></script>
+    
+    <!-- Debug -->
+    <script src="../../js/debug.js"></script>
+    
+    <style>
+        .tab-button {
+            padding: 1rem 1.5rem;
+            background: none;
+            border: none;
+            border-bottom: 3px solid transparent;
+            cursor: pointer;
+            font-weight: 500;
+            color: var(--gray-600);
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tab-button:hover {
+            color: var(--primary-color);
+        }
+
+        .tab-button.active {
+            color: var(--primary-color);
+            border-bottom-color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+    <!-- Debug Panel -->
+    <div id="debug-panel-container" data-fragment="../components/debug-panel"></div>
+    
+    <!-- Navigation Bar -->
+    <div id="navbar-container" data-fragment="../components/navbar"></div>
+    
+    <div class="app-container">
+        <!-- Sidebar -->
+        <div id="sidebar-container" data-fragment="../components/sidebar"></div>
+        
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="container">
+                <div class="page-header">
+                    <h1>신청 현황</h1>
+                </div>
+
+                <!-- Tabs -->
+                <div style="display: flex; gap: 1rem; margin-bottom: 2rem; border-bottom: 2px solid var(--border-color);">
+                    <button class="tab-button active" data-status="PENDING" onclick="switchTab('PENDING', this)">
+                        대기 중 <span id="pending-count" class="badge badge-warning">0</span>
+                    </button>
+                    <button class="tab-button" data-status="CONFIRMED" onclick="switchTab('CONFIRMED', this)">
+                        확정됨 <span id="confirmed-count" class="badge badge-success">0</span>
+                    </button>
+                    <button class="tab-button" data-status="COMPLETED" onclick="switchTab('COMPLETED', this)">
+                        완료됨 <span id="completed-count" class="badge badge-success">0</span>
+                    </button>
+                    <button class="tab-button" data-status="CANCELLED" onclick="switchTab('CANCELLED', this)">
+                        취소됨 <span id="cancelled-count" class="badge badge-danger">0</span>
+                    </button>
+                </div>
+
+                <!-- Appointment List -->
+                <div id="appointment-list">
+                    <div class="empty-state">
+                        <i data-lucide="clock" size="64"></i>
+                        <p>신청 내역을 불러오는 중...</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <!-- Modal -->
+    <div id="modal-container" data-fragment="../components/modal"></div>
+    
+    <!-- Common JavaScript -->
+    <script src="../../js/main.js"></script>
+    
+    <!-- Initialize Lucide Icons -->
+    <script>lucide.createIcons();</script>
+    
+    <!-- Page-specific JavaScript -->
+    <script src="../../js/mentor/appointments.js"></script>
+</body>
+</html>

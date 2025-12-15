@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>일정표 - TAMS</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="../../css/base.css">
+    <link rel="stylesheet" href="../../css/pages.css">
+    
+    <!-- Day.js -->
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.10/dayjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.10/locale/ko.js"></script>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@0.294.0/dist/umd/lucide.min.js"></script>
+    
+    <!-- Fragment Loader -->
+    <script src="../../js/fragment-loader.js"></script>
+    
+    <!-- Debug -->
+    <script src="../../js/debug.js"></script>
+</head>
+<body>
+    <!-- Debug Panel -->
+    <div id="debug-panel-container" data-fragment="../components/debug-panel"></div>
+    
+    <!-- Navigation Bar -->
+    <div id="navbar-container" data-fragment="../components/navbar"></div>
+    
+    <div class="app-container">
+        <!-- Sidebar -->
+        <div id="sidebar-container" data-fragment="../components/sidebar"></div>
+        
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="container">
+                <div class="page-header">
+                    <h1>📅 일정표</h1>
+                </div>
+
+                <!-- 필터 -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">조회 조건</h3>
+                    </div>
+                    <div style="padding: 1rem; display: flex; gap: 1rem; align-items: end; flex-wrap: wrap;">
+                        <div class="form-group" style="flex: 1; min-width: 150px;">
+                            <label>시작일</label>
+                            <input type="date" id="start-date" required>
+                        </div>
+                        <div class="form-group" style="flex: 1; min-width: 150px;">
+                            <label>종료일</label>
+                            <input type="date" id="end-date" required>
+                        </div>
+                        <div class="form-group" style="flex: 1; min-width: 150px;">
+                            <label>조교 필터 (선택사항)</label>
+                            <select id="tutor-filter">
+                                <option value="">전체 조교</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-primary" onclick="loadSchedules()">
+                            <i data-lucide="search"></i>
+                            조회
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 일정 목록 -->
+                <div id="schedule-list">
+                    <div class="empty-state">
+                        <i data-lucide="calendar" size="48"></i>
+                        <p>조회 조건을 선택하고 조회 버튼을 클릭하세요.</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <!-- Modal -->
+    <div id="modal-container" data-fragment="../components/modal"></div>
+    
+    <!-- Common JavaScript -->
+    <script src="../../js/main.js"></script>
+    
+    <!-- Initialize Lucide Icons -->
+    <script>lucide.createIcons();</script>
+    
+    <!-- Page-specific JavaScript -->
+    <script src="../../js/admin/schedules.js"></script>
+</body>
+</html>

@@ -1,0 +1,973 @@
+/* Page-specific styles */
+
+/* Dashboard */
+.dashboard-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-4);
+    margin-bottom: var(--spacing-8);
+}
+
+/* 태블릿: 2열 */
+@media (max-width: 1024px) {
+    .dashboard-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* 모바일: 2열 유지, 좁으면 1열 */
+@media (max-width: 480px) {
+    .dashboard-stats {
+        grid-template-columns: 1fr;
+    }
+}
+
+.stat-card {
+    background: white;
+    border-radius: var(--border-radius);
+    padding: var(--spacing-6);
+    box-shadow: var(--shadow);
+}
+
+.stat-value {
+    font-size: var(--font-size-3xl);
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.stat-label {
+    color: var(--gray-600);
+    margin-top: var(--spacing-2);
+}
+
+/* Student Grid */
+.student-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-4);
+}
+
+/* 넓은 화면: 4열 */
+@media (min-width: 1400px) {
+    .student-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* 모바일: 2열 유지, 좁으면 1열 */
+@media (max-width: 768px) {
+    .student-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .student-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.student-card {
+    background: white;
+    border-radius: var(--border-radius);
+    padding: var(--spacing-5);
+    box-shadow: var(--shadow);
+    transition: transform 0.2s;
+}
+
+.student-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.student-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-3);
+}
+
+.student-header h3 {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+}
+
+.student-body {
+    margin-bottom: var(--spacing-4);
+}
+
+.student-body p {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    color: var(--gray-600);
+    margin-bottom: var(--spacing-2);
+}
+
+.student-footer {
+    display: flex;
+    gap: var(--spacing-2);
+    flex-wrap: wrap;
+}
+
+/* Schedule Grid */
+.schedule-filters {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-6);
+    padding: var(--spacing-4);
+    background: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+}
+
+.date-picker {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3);
+}
+
+.date-picker button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: var(--spacing-2);
+    color: var(--gray-600);
+    transition: color 0.2s;
+}
+
+.date-picker button:hover {
+    color: var(--primary-color);
+}
+
+.schedule-grid {
+    background: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    overflow-x: auto;
+}
+
+.grid-header,
+.grid-row {
+    display: grid;
+    grid-template-columns: 80px repeat(auto-fit, minmax(150px, 1fr));
+    border-bottom: 1px solid var(--border-color);
+}
+
+.grid-row:last-child {
+    border-bottom: none;
+}
+
+.grid-cell {
+    padding: var(--spacing-3);
+    border-right: 1px solid var(--border-color);
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.grid-cell:last-child {
+    border-right: none;
+}
+
+.time-header,
+.time-cell {
+    background-color: var(--gray-50);
+    font-weight: 600;
+    color: var(--gray-700);
+}
+
+.tutor-header {
+    background-color: var(--gray-100);
+    flex-direction: column;
+    padding: var(--spacing-4);
+}
+
+.tutor-name {
+    font-weight: 600;
+    margin-bottom: var(--spacing-1);
+}
+
+.tutor-subjects {
+    font-size: var(--font-size-xs);
+    color: var(--gray-600);
+}
+
+.slot {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-radius: var(--border-radius-sm);
+}
+
+.slot.available {
+    background-color: var(--success-light);
+    color: var(--success-color);
+}
+
+.slot.available:hover {
+    background-color: var(--success-color);
+    color: white;
+}
+
+.slot.pending {
+    background-color: var(--warning-light);
+    color: var(--warning-color);
+    cursor: default;
+}
+
+.slot.confirmed {
+    background-color: var(--danger-light);
+    color: var(--danger-color);
+    cursor: default;
+}
+
+.slot.unavailable {
+    background-color: var(--gray-100);
+    cursor: not-allowed;
+}
+
+.student-tag {
+    font-size: var(--font-size-xs);
+    padding: var(--spacing-1) var(--spacing-2);
+    background-color: white;
+    border-radius: var(--border-radius-sm);
+    font-weight: 500;
+}
+
+.schedule-legend {
+    display: flex;
+    gap: var(--spacing-6);
+    margin-top: var(--spacing-4);
+    padding: var(--spacing-4);
+    background: white;
+    border-radius: var(--border-radius);
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    font-size: var(--font-size-sm);
+}
+
+.status-icon {
+    width: 1rem;
+    height: 1rem;
+    border-radius: var(--border-radius-sm);
+}
+
+.status-icon.available {
+    background-color: var(--success-light);
+}
+
+.status-icon.pending {
+    background-color: var(--warning-light);
+}
+
+.status-icon.confirmed {
+    background-color: var(--danger-light);
+}
+
+.status-icon.unavailable {
+    background-color: var(--gray-100);
+}
+
+/* Appointment Card */
+.appointment-card {
+    background: white;
+    border-radius: var(--border-radius);
+    padding: var(--spacing-5);
+    margin-bottom: var(--spacing-4);
+    box-shadow: var(--shadow);
+}
+
+.appointment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-4);
+}
+
+.time-info {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    font-weight: 600;
+    color: var(--gray-700);
+}
+
+.appointment-body {
+    margin-bottom: var(--spacing-4);
+}
+
+.info-row {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    margin-bottom: var(--spacing-3);
+    color: var(--gray-700);
+}
+
+.info-row i {
+    color: var(--gray-500);
+}
+
+.info-row.description {
+    background-color: var(--gray-50);
+    padding: var(--spacing-3);
+    border-radius: var(--border-radius-sm);
+}
+
+.info-row.created {
+    font-size: var(--font-size-sm);
+    color: var(--gray-500);
+}
+
+.appointment-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--spacing-3);
+}
+
+/* Search Box */
+.search-box {
+    margin-bottom: var(--spacing-6);
+    position: relative;
+}
+
+.search-box input {
+    width: 100%;
+    padding: var(--spacing-3) var(--spacing-4);
+    border: 2px solid var(--border-color);
+    border-radius: var(--border-radius);
+    font-size: var(--font-size-base);
+}
+
+.search-box input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+/* Pagination */
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-2);
+    margin-top: var(--spacing-6);
+}
+
+.page-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.5rem;
+    height: 2.5rem;
+    padding: var(--spacing-2) var(--spacing-3);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    color: var(--gray-700);
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+.page-link:hover {
+    background-color: var(--gray-100);
+}
+
+.page-link.active {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+/* Checkbox & Radio Groups */
+.checkbox-group,
+.radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-2);
+}
+
+.checkbox-group label,
+.radio-group label {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    cursor: pointer;
+}
+
+/* Table */
+.table {
+    width: 100%;
+    background: white;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+}
+
+.table th,
+.table td {
+    padding: var(--spacing-4);
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.table th {
+    background-color: var(--gray-50);
+    font-weight: 600;
+    color: var(--gray-700);
+}
+
+.table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.table tbody tr:hover {
+    background-color: var(--gray-50);
+}
+
+/* Warning Message */
+.warning {
+    padding: var(--spacing-3);
+    background-color: var(--warning-light);
+    color: var(--warning-color);
+    border-radius: var(--border-radius-sm);
+    font-size: var(--font-size-sm);
+    margin-top: var(--spacing-2);
+}
+
+/* Calendar Styles */
+.calendar-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-4);
+    margin-bottom: var(--spacing-6);
+    padding: var(--spacing-4);
+    background: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+}
+
+.calendar-controls h2 {
+    margin: 0;
+    font-size: var(--font-size-xl);
+    font-weight: 600;
+    color: var(--gray-900);
+    min-width: 200px;
+    text-align: center;
+}
+
+.calendar-controls button {
+    padding: var(--spacing-2) var(--spacing-3);
+    min-width: auto;
+    width: auto;
+}
+
+.calendar-controls button i {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+.calendar-container {
+    background: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    padding: var(--spacing-4);
+    margin-bottom: var(--spacing-4);
+}
+
+.calendar-grid {
+    width: 100%;
+}
+
+.calendar-weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: var(--spacing-2);
+    margin-bottom: var(--spacing-2);
+}
+
+.calendar-weekday {
+    text-align: center;
+    font-weight: 600;
+    color: var(--gray-600);
+    padding: var(--spacing-2);
+    font-size: var(--font-size-sm);
+}
+
+.calendar-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: var(--spacing-2);
+}
+
+.calendar-day {
+    min-height: 100px;
+    border: 2px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-2);
+    cursor: pointer;
+    transition: all 0.2s;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.calendar-day:hover:not(.past) {
+    border-color: var(--primary-color);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+.calendar-day.past {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: var(--gray-50);
+}
+
+.calendar-day.other-month {
+    opacity: 0.4;
+}
+
+.calendar-day.today {
+    border-color: var(--primary-color);
+    background: var(--primary-light);
+}
+
+.calendar-day.has-pending {
+    border: 2px solid var(--warning-color);
+    box-shadow: 0 0 0 2px rgba(255, 193, 7, 0.2);
+}
+
+.calendar-day.has-pending.today {
+    border: 2px solid var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(255, 193, 7, 0.3);
+}
+
+.day-number {
+    font-weight: 600;
+    font-size: var(--font-size-base);
+    color: var(--gray-700);
+    margin-bottom: var(--spacing-1);
+}
+
+.calendar-day.today .day-number {
+    color: var(--primary-color);
+    font-weight: 700;
+}
+
+.day-slots {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 2px;
+    margin-top: var(--spacing-1);
+    width: 100%;
+}
+
+.slot-dots {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3px;
+    width: 100%;
+}
+
+.slot-row {
+    display: flex;
+    gap: 2px;
+    width: 100%;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+
+.slot-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    display: inline-block;
+    flex-shrink: 0;
+}
+
+.slot-dot.available {
+    background-color: #22c55e; /* 초록 */
+}
+
+.slot-dot.pending-own {
+    background-color: #f97316; /* 주황 */
+}
+
+.slot-dot.pending-other {
+    background-color: #ef4444; /* 빨강 */
+}
+
+.slot-dot.confirmed {
+    background-color: #6b7280; /* 회색 */
+}
+
+.slot-dot-more {
+    font-size: 8px;
+    color: var(--gray-500);
+    font-weight: 600;
+    padding: 0 2px;
+}
+
+/* 모달 내 타임그리드 */
+.schedule-grid-modal {
+    background: white;
+    border-radius: var(--border-radius);
+    overflow-x: auto;
+}
+
+.schedule-grid-modal .grid-header,
+.schedule-grid-modal .grid-row {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.schedule-grid-modal .grid-row:last-child {
+    border-bottom: none;
+}
+
+.schedule-grid-modal .grid-cell {
+    padding: var(--spacing-3);
+    border-right: 1px solid var(--border-color);
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.schedule-grid-modal .grid-cell:last-child {
+    border-right: none;
+}
+
+.schedule-grid-modal .slot.pending-own {
+    background-color: #fef3c7;
+    color: #f97316;
+}
+
+.schedule-grid-modal .slot.pending-other {
+    background-color: #fee2e2;
+    color: #ef4444;
+}
+
+.schedule-grid-modal .slot.confirmed {
+    background-color: var(--gray-200);
+    color: var(--gray-600);
+}
+
+.schedule-grid-modal .slot.pending {
+    background-color: #fef3c7;
+    color: #f97316;
+    border: 1px solid #fbbf24;
+}
+
+.schedule-grid-modal .slot.completed {
+    background-color: #dbeafe;
+    color: #2563eb;
+}
+
+.schedule-grid-modal .slot.cancelled {
+    background-color: #fee2e2;
+    color: #ef4444;
+    opacity: 0.6;
+}
+
+.schedule-grid-modal .slot.unavailable {
+    background-color: var(--gray-100);
+    color: var(--gray-400);
+}
+
+.schedule-grid-modal .slot {
+    transition: all 0.2s;
+    border-radius: var(--border-radius-sm);
+}
+
+.schedule-grid-modal .slot:hover:not(.unavailable) {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.schedule-grid-modal .time-header {
+    font-weight: 600;
+    background-color: var(--gray-50);
+    color: var(--gray-700);
+}
+
+.schedule-grid-modal .tutor-header {
+    font-weight: 600;
+    background-color: var(--gray-50);
+    color: var(--gray-700);
+}
+
+.schedule-grid-modal .time-cell {
+    font-weight: 500;
+    color: var(--gray-600);
+    justify-content: flex-start;
+    padding-left: var(--spacing-4);
+}
+
+.schedule-grid-modal .student-tag {
+    padding: var(--spacing-1) var(--spacing-2);
+    border-radius: var(--border-radius-sm);
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    display: inline-block;
+}
+
+/* 뷰 전환 탭 스타일 */
+.view-tabs {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.view-tab {
+    padding: 0.75rem 1.5rem;
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    cursor: pointer;
+    font-weight: 500;
+    color: var(--gray-600);
+    transition: all 0.2s;
+    font-size: var(--font-size-base);
+}
+
+.view-tab:hover {
+    color: var(--primary-color);
+}
+
+.view-tab.active {
+    color: var(--primary-color);
+    border-bottom-color: var(--primary-color);
+}
+
+/* 범례 스타일 업데이트 */
+.status-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: var(--spacing-1);
+}
+
+.status-dot.available {
+    background-color: #22c55e;
+}
+
+.status-dot.pending-own {
+    background-color: #f97316;
+}
+
+.status-dot.pending-other {
+    background-color: #ef4444;
+}
+
+.status-dot.confirmed {
+    background-color: #6b7280;
+}
+
+/* 반응형 디자인 - 모바일 */
+@media (max-width: 768px) {
+    /* 달력 컨트롤 */
+    .calendar-controls {
+        gap: var(--spacing-2);
+        padding: var(--spacing-3);
+    }
+    
+    .calendar-controls h2 {
+        font-size: var(--font-size-lg);
+        min-width: 150px;
+    }
+    
+    .calendar-controls button {
+        padding: var(--spacing-2);
+        min-width: 40px;
+    }
+    
+    .calendar-controls button i {
+        width: 1rem;
+        height: 1rem;
+    }
+    
+    .calendar-controls button span,
+    .calendar-controls button .btn-text {
+        display: none;
+    }
+    
+    /* 달력 그리드 - 모바일에서 화면 너비에 맞춤 */
+    .calendar-container {
+        padding: var(--spacing-2);
+        overflow-x: visible;
+        width: 100%;
+        max-width: 100%;
+    }
+    
+    .calendar-grid {
+        width: 100%;
+        max-width: 100%;
+    }
+    
+    .calendar-weekdays {
+        width: 100%;
+        grid-template-columns: repeat(7, 1fr);
+        gap: var(--spacing-1);
+    }
+    
+    .calendar-days {
+        width: 100%;
+        grid-template-columns: repeat(7, 1fr);
+        gap: var(--spacing-1);
+    }
+    
+    .calendar-day {
+        min-height: 60px;
+        padding: var(--spacing-1);
+        width: 100%;
+        box-sizing: border-box;
+    }
+    
+    .day-number {
+        font-size: var(--font-size-sm);
+        margin-bottom: 2px;
+    }
+    
+    .day-slots {
+        gap: 1px;
+        margin-top: 2px;
+    }
+    
+    .slot-row {
+        gap: 3px;
+        justify-content: flex-start;
+        flex-wrap: nowrap;
+        width: 100%;
+        margin-bottom: 1px;
+    }
+    
+    .slot-dot {
+        width: 5px;
+        height: 5px;
+        flex-shrink: 0;
+    }
+    
+    .slot-dot-more {
+        font-size: 5px;
+        padding: 0 1px;
+    }
+    
+    /* 범례 */
+    .schedule-legend {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-2);
+    }
+    
+    .legend-item {
+        font-size: var(--font-size-xs);
+    }
+    
+    /* 타임그리드 모달 */
+    .schedule-grid-modal {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .schedule-grid-modal .grid-header,
+    .schedule-grid-modal .grid-row {
+        min-width: 600px;
+    }
+    
+    .schedule-grid-modal .grid-cell {
+        padding: var(--spacing-2);
+        min-height: 40px;
+        font-size: var(--font-size-sm);
+    }
+    
+    .schedule-grid-modal .tutor-header {
+        padding: var(--spacing-2);
+    }
+    
+    .schedule-grid-modal .tutor-name {
+        font-size: var(--font-size-sm);
+    }
+    
+    .schedule-grid-modal .tutor-subjects {
+        font-size: var(--font-size-xs);
+    }
+}
+
+/* 태블릿 */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .calendar-day {
+        min-height: 90px;
+    }
+    
+    .calendar-controls button .btn-text {
+        display: none;
+    }
+}
+
+/* ==================== 공통 카드 그리드 (짝수 열 배치) ==================== */
+.user-grid,
+.tutor-grid,
+.pending-grid,
+.appointment-grid,
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-4);
+}
+
+/* 넓은 화면: 4열 */
+@media (min-width: 1400px) {
+    .user-grid,
+    .tutor-grid,
+    .pending-grid,
+    .appointment-grid,
+    .card-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* 모바일: 2열 유지 */
+@media (max-width: 768px) {
+    .user-grid,
+    .tutor-grid,
+    .pending-grid,
+    .appointment-grid,
+    .card-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* 좁은 모바일: 1열 */
+@media (max-width: 480px) {
+    .user-grid,
+    .tutor-grid,
+    .pending-grid,
+    .appointment-grid,
+    .card-grid,
+    .student-grid {
+        grid-template-columns: 1fr;
+    }
+}
+

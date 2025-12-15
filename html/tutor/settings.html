@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>설정 - TAMS</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="../../css/base.css">
+    <link rel="stylesheet" href="../../css/pages.css">
+    
+    <!-- Day.js -->
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.10/dayjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.10/locale/ko.js"></script>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@0.294.0/dist/umd/lucide.min.js"></script>
+    
+    <!-- Fragment Loader -->
+    <script src="../../js/fragment-loader.js"></script>
+    
+    <!-- Debug -->
+    <script src="../../js/debug.js"></script>
+</head>
+<body>
+    <!-- Debug Panel -->
+    <div id="debug-panel-container" data-fragment="../components/debug-panel"></div>
+    
+    <!-- Navigation Bar -->
+    <div id="navbar-container" data-fragment="../components/navbar"></div>
+    
+    <div class="app-container">
+        <!-- Sidebar -->
+        <div id="sidebar-container" data-fragment="../components/sidebar"></div>
+        
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="container">
+                <div class="page-header">
+                    <h1>⚙️ 설정</h1>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">근무 시간 템플릿</h3>
+                        <button class="btn btn-primary btn-sm" onclick="showCreateTemplateModal()">
+                            <i data-lucide="plus"></i>
+                            템플릿 추가
+                        </button>
+                    </div>
+                    <div id="template-settings">
+                        <div class="empty-state">
+                            <i data-lucide="clock" size="48"></i>
+                            <p>템플릿을 불러오는 중...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">근무 시간 설정</h3>
+                        <button class="btn btn-primary btn-sm" onclick="showAddScheduleModal()">
+                            <i data-lucide="plus"></i>
+                            추가
+                        </button>
+                    </div>
+                    <div id="schedule-settings">
+                        <div class="empty-state">
+                            <i data-lucide="clock" size="48"></i>
+                            <p>근무 시간을 불러오는 중...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">슬롯 생성</h3>
+                        <button class="btn btn-primary btn-sm" onclick="showGenerateSlotsModal()">
+                            <i data-lucide="calendar-plus"></i>
+                            슬롯 생성
+                        </button>
+                    </div>
+                    <div id="slot-generation">
+                        <div class="empty-state">
+                            <i data-lucide="calendar" size="48"></i>
+                            <p>근무 시간을 설정한 후 슬롯을 생성하세요.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">담당 가능 과목</h3>
+                        <button class="btn btn-primary btn-sm" onclick="showEditSubjectsModal()">
+                            <i data-lucide="edit"></i>
+                            수정
+                        </button>
+                    </div>
+                    <div id="subject-settings">
+                        <div class="empty-state">
+                            <i data-lucide="book" size="48"></i>
+                            <p>과목 정보를 불러오는 중...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <!-- Modal -->
+    <div id="modal-container" data-fragment="../components/modal"></div>
+    
+    <!-- Common JavaScript -->
+    <script src="../../js/main.js"></script>
+    
+    <!-- Initialize Lucide Icons -->
+    <script>lucide.createIcons();</script>
+    
+    <!-- Page-specific JavaScript -->
+    <script src="../../js/tutor/settings.js"></script>
+</body>
+</html>

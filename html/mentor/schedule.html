@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>보충 신청 - TAMS</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="../../css/base.css">
+    <link rel="stylesheet" href="../../css/pages.css">
+    
+    <!-- Day.js -->
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.10/dayjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.10/locale/ko.js"></script>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@0.294.0/dist/umd/lucide.min.js"></script>
+    
+    <!-- Fragment Loader -->
+    <script src="../../js/fragment-loader.js"></script>
+    
+    <!-- Debug -->
+    <script src="../../js/debug.js"></script>
+</head>
+<body>
+    <!-- Debug Panel -->
+    <div id="debug-panel-container" data-fragment="../components/debug-panel"></div>
+    
+    <!-- Navigation Bar -->
+    <div id="navbar-container" data-fragment="../components/navbar"></div>
+    
+    <div class="app-container">
+        <!-- Sidebar -->
+        <div id="sidebar-container" data-fragment="../components/sidebar"></div>
+        
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="container">
+                <div class="page-header">
+                    <h1>📅 보충 신청</h1>
+                </div>
+
+                <!-- 월 이동 컨트롤 -->
+                <div class="calendar-controls">
+                    <button class="btn btn-secondary" onclick="changeMonth(-1)">
+                        <i data-lucide="chevron-left"></i>
+                        <span class="btn-text">이전 달</span>
+                    </button>
+                    <h2 id="current-month-display"></h2>
+                    <button class="btn btn-secondary" onclick="changeMonth(1)">
+                        <span class="btn-text">다음 달</span>
+                        <i data-lucide="chevron-right"></i>
+                    </button>
+                </div>
+
+                <!-- 달력 -->
+                <div id="calendar-container" class="calendar-container">
+                    <div class="empty-state">
+                        <i data-lucide="calendar" size="64"></i>
+                        <p>달력을 불러오는 중...</p>
+                    </div>
+                </div>
+
+                <!-- 범례 -->
+                <div class="schedule-legend">
+                    <span class="legend-item">
+                        <span class="status-dot available"></span> 신청 가능
+                    </span>
+                    <span class="legend-item">
+                        <span class="status-dot pending-own"></span> 대기 중 (본인)
+                    </span>
+                    <span class="legend-item">
+                        <span class="status-dot pending-other"></span> 대기 중 (타멘토)
+                    </span>
+                    <span class="legend-item">
+                        <span class="status-dot confirmed"></span> 승인 완료
+                    </span>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <!-- Modal -->
+    <div id="modal-container" data-fragment="../components/modal"></div>
+    
+    <!-- Common JavaScript -->
+    <script src="../../js/main.js"></script>
+    
+    <!-- Initialize Lucide Icons -->
+    <script>lucide.createIcons();</script>
+    
+    <!-- Page-specific JavaScript -->
+    <script src="../../js/schedule.js"></script>
+</body>
+</html>

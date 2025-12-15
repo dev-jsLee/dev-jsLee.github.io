@@ -1,0 +1,21 @@
+<!-- 
+  Empty State Component
+  
+  Usage:
+  Use with data attributes:
+  <div class="empty-state" data-empty-icon="users" data-empty-message="데이터 없음" data-empty-size="64"></div>
+  
+  Or create dynamically:
+  createEmptyState('users', '데이터 없음', 64)
+  
+  Parameters:
+  - icon: Lucide icon name (required)
+  - message: Message to display (required)
+  - size: Icon size in pixels (default: 64)
+-->
+<template id="empty-state-template">
+    <div class="empty-state">
+        <i data-lucide="" data-empty-icon></i>
+        <p data-empty-message></p>
+    </div>
+</template>

@@ -1,0 +1,76 @@
+<!-- Debug Panel - DEBUG_MODE가 true일 때만 표시 -->
+<div id="debug-panel" class="debug-panel" style="display: none;">
+    <div class="debug-header">
+        <span>🛠️ Debug</span>
+        <div class="debug-header-btns">
+            <button class="debug-toggle" onclick="popoutDebugPanel()" title="별도 창으로 열기">🗗</button>
+            <button class="debug-toggle" onclick="toggleDebugPanel()" title="접기/펼치기">−</button>
+        </div>
+    </div>
+    
+    <div class="debug-content">
+        <!-- 더미 데이터 토글 -->
+        <div class="debug-section">
+            <h4>🎭 더미 데이터</h4>
+            <div class="debug-toggle-row">
+                <label class="debug-switch">
+                    <input type="checkbox" id="dummy-data-toggle" onchange="toggleDummyData(this.checked)">
+                    <span class="debug-slider"></span>
+                </label>
+                <span id="dummy-data-label">OFF</span>
+            </div>
+        </div>
+        
+        <!-- 페이지 네비게이션 -->
+        <div class="debug-section">
+            <h4>📄 Admin</h4>
+            <div class="debug-nav">
+                <a href="../admin/dashboard.html">대시보드</a>
+                <a href="../admin/users.html">계정 관리</a>
+                <a href="../admin/tutors.html">조교 관리</a>
+                <a href="../admin/statistics.html">통계</a>
+                <a href="../admin/subjects.html">과목 관리</a>
+                <a href="../admin/schedules.html">일정표</a>
+            </div>
+        </div>
+        
+        <div class="debug-section">
+            <h4>📄 Mentor</h4>
+            <div class="debug-nav">
+                <a href="../mentor/dashboard.html">대시보드</a>
+                <a href="../mentor/students.html">학생 관리</a>
+                <a href="../mentor/schedule.html">보충 신청</a>
+                <a href="../mentor/appointments.html">신청 현황</a>
+            </div>
+        </div>
+        
+        <div class="debug-section">
+            <h4>📄 Tutor</h4>
+            <div class="debug-nav">
+                <a href="../tutor/dashboard.html">대시보드</a>
+                <a href="../tutor/pending.html">승인 대기</a>
+                <a href="../tutor/calendar.html">내 일정</a>
+                <a href="../tutor/settings.html">설정</a>
+            </div>
+        </div>
+        
+        <div class="debug-section">
+            <h4>📄 기타</h4>
+            <div class="debug-nav">
+                <a href="../login.html">로그인</a>
+            </div>
+        </div>
+        
+        <!-- 오류 로그 -->
+        <div class="debug-section">
+            <h4>⚠️ 오류 로그 <span id="debug-log-count" class="debug-badge">0</span></h4>
+            <div id="debug-log" class="debug-log"></div>
+            <div class="debug-actions">
+                <button class="debug-btn" onclick="copyDebugLog()">📋 로그 복사</button>
+                <button class="debug-btn" onclick="clearDebugLog()">🗑️ 로그 삭제</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 디버그 패널 다시 열기 버튼 -->
+<button id="debug-reopen-btn" class="debug-reopen-btn" onclick="toggleDebugPanel()" title="디버그 패널 열기">🛠️</button>
