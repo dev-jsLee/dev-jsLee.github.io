@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Admin</title>
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+    <div id="env-warning" class="env-warning hidden">
+        <strong>이 도구는 로컬에서만 동작합니다.</strong>
+        저장소 루트에서 <code>npm run admin</code> 으로 실행한 뒤 <code>http://127.0.0.1:4488/</code> 으로 접속하세요.
+    </div>
+
+    <header class="topbar">
+        <div class="brand">
+            <h1>Portfolio Admin</h1>
+            <span class="muted">manifest.json editor</span>
+        </div>
+        <div class="status">
+            <span id="dirty-indicator" class="dirty-indicator">변경 없음</span>
+            <span id="saved-indicator" class="muted"></span>
+            <button id="save-btn" type="button" class="primary">저장</button>
+        </div>
+    </header>
+
+    <main class="layout">
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <button id="select-site" type="button" class="list-item active">
+                    <span class="list-item-title">Site</span>
+                    <span class="list-item-sub">개발자 / 태그라인 / 링크</span>
+                </button>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-header">
+                    <span>Projects</span>
+                    <button id="add-project" type="button" class="link-btn">+ 새 카드</button>
+                </div>
+                <ul id="project-list" class="project-list"></ul>
+            </div>
+        </aside>
+
+        <section class="panel">
+            <div id="form-host"></div>
+        </section>
+    </main>
+
+    <template id="tpl-site-form">
+        <div class="form-card">
+            <h2>Site</h2>
+            <label>
+                <span>Developer</span>
+                <input type="text" data-field="developer">
+            </label>
+            <label>
+                <span>Tagline</span>
+                <input type="text" data-field="tagline">
+            </label>
+            <label>
+                <span>Footer text</span>
+                <input type="text" data-field="footer">
+            </label>
+            <label>
+                <span>Repository URL</span>
+                <input type="text" data-field="repoUrl" placeholder="https://github.com/...">
+            </label>
+            <div class="links-block">
+                <div class="links-header">
+                    <span>Links</span>
+                    <button type="button" data-action="add-link" class="link-btn">+ 링크 추가</button>
+                </div>
+                <ul data-list="links" class="links-list"></ul>
+            </div>
+        </div>
+    </template>
+
+    <template id="tpl-link-row">
+        <li class="link-row">
+            <input type="text" data-link-field="label" placeholder="Label">
+            <input type="text" data-link-field="url" placeholder="URL">
+            <input type="text" data-link-field="icon" placeholder="icon (lucide name)">
+            <button type="button" data-action="remove-link" class="danger-link">삭제</button>
+        </li>
+    </template>
+
+    <template id="tpl-project-form">
+        <div class="form-card">
+            <div class="form-card-header">
+                <h2><span data-display="slug-title">project</span></h2>
+                <div class="badge-row">
+                    <span class="status-badge" data-display="status"></span>
+                </div>
+            </div>
+            <label>
+                <span>Slug <small>(폴더명, 변경 시 projects/&lt;slug&gt;/ 와 일치해야 함)</small></span>
+                <input type="text" data-field="slug">
+            </label>
+            <label>
+                <span>Title</span>
+                <input type="text" data-field="title">
+            </label>
+            <label>
+                <span>Subtitle</span>
+                <input type="text" data-field="subtitle">
+            </label>
+            <label>
+                <span>Description</span>
+                <textarea data-field="description" rows="3"></textarea>
+            </label>
+            <label>
+                <span>Tech (쉼표 구분)</span>
+                <input type="text" data-field="tech">
+            </label>
+            <label>
+                <span>Role</span>
+                <input type="text" data-field="role">
+            </label>
+            <div class="grid-2">
+                <label>
+                    <span>Category</span>
+                    <select data-field="category">
+                        <option value="personal">personal</option>
+                        <option value="team">team</option>
+                        <option value="side">side</option>
+                        <option value="learning">learning</option>
+                    </select>
+                </label>
+                <label>
+                    <span>Order</span>
+                    <input type="number" data-field="order" min="0" step="1">
+                </label>
+            </div>
+            <div class="grid-2">
+                <label>
+                    <span>Entry (기본 index.html)</span>
+                    <input type="text" data-field="entry" placeholder="index.html">
+                </label>
+                <label>
+                    <span>Icon (lucide name)</span>
+                    <input type="text" data-field="icon" placeholder="book-open">
+                </label>
+            </div>
+            <label>
+                <span>Repository URL</span>
+                <input type="text" data-field="repoUrl" placeholder="https://github.com/...">
+            </label>
+            <div class="form-actions">
+                <button type="button" data-action="delete-project" class="danger">이 카드 삭제</button>
+            </div>
+        </div>
+    </template>
+
+    <script src="admin.js" type="module"></script>
+</body>
+</html>

@@ -110,6 +110,23 @@ dev-jsLee.github.io/
 - 다크 모드는 **선택 사항(필수 아님)**.
 - 카드 클릭 시 새 탭 여부는 통일된 정책으로 정한다(기본: 같은 탭).
 
+### 4.4 데이터 소스 (랜딩 카드의 출처)
+
+랜딩 페이지의 카드와 hero는 **하드코딩하지 않고** 두 파일을 합쳐 동적으로 렌더링한다.
+
+| 파일 | 역할 | 누가 관리 |
+| --- | --- | --- |
+| `.gitmodules` | "어떤 서브모듈이 등록돼 있는가" | git (`git submodule add`로 자동 갱신) |
+| `projects/manifest.json` | "각 카드를 어떻게 표시할까" + hero 정보 | 사람 (또는 admin 도구) |
+
+브라우저(`js/landing.js`)가 두 파일을 모두 fetch해 합집합으로 카드 목록을 만든다:
+
+- **둘 다 존재** → 정상 카드 (manifest의 모든 필드 사용)
+- **manifest only** → 정상 카드 (서브모듈 미등록 외부 항목 가능)
+- **.gitmodules only** → stub 카드 ("META MISSING" 뱃지, 슬러그만 표시)
+
+따라서 새 서브모듈을 `git submodule add`하면 **즉시 stub 카드가 자동 등장**한다. 이후 메타데이터를 채우는 단계는 5.1을 따른다.
+
 ---
 
 ## 5. 서브 프로젝트 편입 절차 (운영 규칙)
@@ -118,10 +135,19 @@ dev-jsLee.github.io/
 
 1. **편입 조건 점검** (3절의 정적 서빙 가능성, 라이선스 등)
 2. `projects/<kebab-case-name>/` 경로로 **git submodule 추가**
-3. 서브 프로젝트의 진입점이 `index.html`이 아니라면, **진입 경로를 명시**해 랜딩 카드 링크에 반영
-4. 메인 `index.html`에 해당 프로젝트 카드 추가
-5. (선택) 썸네일 이미지를 `assets/`에 추가
-6. 커밋 메시지에 편입한 서브모듈명을 명시
+   ```bash
+   git submodule add <repo-url> projects/<name>
+   ```
+   이 시점에 `.gitmodules`가 갱신되고, 랜딩 페이지에는 **stub 카드가 자동으로 노출**된다.
+3. **로컬 admin 도구로 메타데이터 입력**
+   ```bash
+   npm run admin
+   # http://127.0.0.1:4488/ 접속 → 사이드바에서 새 슬러그 선택 → 폼 작성 → 저장
+   ```
+   `projects/manifest.json`이 갱신된다.
+4. 진입점이 `index.html`이 아니면 admin의 `Entry` 필드에 경로 입력.
+5. (선택) 썸네일 이미지를 `assets/`에 추가하고 manifest의 `thumbnail` 필드에 경로 지정.
+6. 커밋: `.gitmodules`, `projects/manifest.json`, (편입한 서브모듈 포인터)를 함께 한 커밋으로.
 
 ### 5.2 최신 코드로 업데이트할 때
 
@@ -163,6 +189,8 @@ git commit -m "update submodules"
 - **루트 경로**: `https://dev-jslee.github.io/`
 - **서브 프로젝트 경로**: `https://dev-jslee.github.io/projects/<name>/`
 - **서브모듈 체크아웃**: GitHub Pages 빌드 시 서브모듈이 함께 받아져야 한다. 워크플로(예: `actions/checkout`)에서 `submodules: recursive` 옵션이 켜져 있어야 하며, 비공개 서브모듈은 사용하지 않는다(공개 저장소만 편입).
+- **`.gitmodules`도 정적 자산**: 브라우저가 fetch해야 하므로 Pages에서 서빙된다. Jekyll 처리에서 제외되도록 루트에 `.nojekyll` 파일을 두기를 권장.
+- **`tools/` 디렉토리**: 로컬 도구(admin) 코드. Pages에도 함께 서빙되지만 admin UI는 호스트 가드(`localhost`/`127.0.0.1` 외 차단)로 인해 비-로컬 환경에서는 안내만 표시되고 동작하지 않는다.
 
 ---
 

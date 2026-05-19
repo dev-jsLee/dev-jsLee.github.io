@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "site": {
+    "developer": "[이준상]",
+    "tagline": "[AI를 적극 활용하는 올라운더 개발자]",
+    "links": [
+      { "label": "GitHub", "url": "https://githu  b.com/dev-jslee", "icon": "github" },
+      { "label": "Email", "url": "mailto:dev.jslee@gmail.com", "icon": "mail" }
+    ],
+    "footer": "© [이준상] — Portfolio",
+    "repoUrl": "https://github.com/dev-jslee/dev-jslee.github.io"
+  },
+  "projects": [
+    {
+      "slug": "tams",
+      "title": "TAMS",
+      "subtitle": "보충지도 관리 시스템",
+      "description": "[수강생-멘토-조교로 이어지는 보충지도 신청/ 일정 관리 등을 통합 관리하는 시스템의 화면을 시연합니다.]",
+      "tech": ["HTML", "CSS", "Vanilla JS"],
+      "role": "[기획,개발, 리드]",
+      "category": "personal",
+      "entry": "index.html",
+      "icon": "book-open",
+      "thumbnail": null,
+      "repoUrl": null,
+      "order": 1
+    }
+  ]
+}

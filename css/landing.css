@@ -127,6 +127,7 @@ section h2 {
 }
 
 .project-card {
+  position: relative;
   display: flex;
   flex-direction: column;
   background: var(--bg-card);
@@ -207,6 +208,60 @@ section h2 {
   color: var(--text);
   font-weight: 600;
   margin-right: 0.25rem;
+}
+
+/* Status badge (stub / orphan) */
+.project-card-badge {
+  position: absolute;
+  top: 0.85rem;
+  right: 0.85rem;
+  padding: 0.2rem 0.55rem;
+  font-size: 0.65rem;
+  letter-spacing: 0.05em;
+  font-weight: 700;
+  border-radius: 999px;
+  text-transform: uppercase;
+}
+
+.badge-stub {
+  background: #fef3c7;
+  color: #92400e;
+  border: 1px solid #fcd34d;
+}
+
+.badge-orphan {
+  background: #f1f5f9;
+  color: #475569;
+  border: 1px solid #cbd5e1;
+}
+
+/* Stub card (submodule registered but no manifest entry) */
+.project-card.stub {
+  background: #fafafa;
+  border-style: dashed;
+  border-color: #e5e7eb;
+  opacity: 0.95;
+}
+
+.project-card.stub:hover {
+  border-color: #f59e0b;
+}
+
+.project-card.stub .project-card-header .icon {
+  color: #94a3b8;
+}
+
+.project-card.stub .project-card-title {
+  color: var(--text-muted);
+  font-family: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, Consolas, monospace;
+}
+
+.empty-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--text-muted);
+  font-size: 0.95rem;
 }
 
 /* Footer */

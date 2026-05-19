@@ -1,0 +1,9 @@
+{
+  "name": "dev-jslee-github-io",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "admin": "node tools/admin/server.mjs",
+    "serve": "python -m http.server 8765"
+  }
+}
