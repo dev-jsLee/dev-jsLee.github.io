@@ -11,6 +11,7 @@ async function load() {
   const cards = mergeCards(manifest.projects ?? [], submoduleSlugs);
 
   renderHero(manifest.site ?? {});
+  renderAbout(manifest.site ?? {});
   renderGrid(cards);
   renderFooter(manifest.site ?? {});
 
@@ -88,6 +89,50 @@ function renderHero(site) {
       linksHost.appendChild(a);
     }
   }
+}
+
+function renderAbout(site) {
+  const section = document.getElementById('about-section');
+  const host = document.getElementById('about-qa');
+  if (!section || !host) return;
+
+  const about = site.about ?? {};
+  const qa = Array.isArray(about.qa) ? about.qa : [];
+
+  if (qa.length === 0) {
+    section.hidden = true;
+    return;
+  }
+
+  setText('[data-about="heading"]', about.heading ?? '자기소개');
+
+  host.innerHTML = '';
+  for (const item of qa) {
+    if (!item || (!item.q && !item.a)) continue;
+
+    const card = document.createElement('div');
+    card.className = 'about-item';
+
+    const q = document.createElement('p');
+    q.className = 'about-q';
+    const qIcon = document.createElement('i');
+    qIcon.setAttribute('data-lucide', 'message-circle-question');
+    qIcon.className = 'icon';
+    q.appendChild(qIcon);
+    const qText = document.createElement('span');
+    qText.innerHTML = ' ' + renderInlineMarkdown(item.q ?? '');
+    q.appendChild(qText);
+    card.appendChild(q);
+
+    const a = document.createElement('p');
+    a.className = 'about-a';
+    a.innerHTML = renderInlineMarkdown(item.a ?? '');
+    card.appendChild(a);
+
+    host.appendChild(card);
+  }
+
+  section.hidden = false;
 }
 
 function renderGrid(cards) {
@@ -214,6 +259,23 @@ function renderFooter(site) {
 function setText(selector, text) {
   const el = document.querySelector(selector);
   if (el) el.textContent = text;
+}
+
+// 안전한 인라인 마크다운: HTML을 먼저 이스케이프한 뒤 일부 문법만 변환.
+// 지원: **굵게**, *기울임*, `코드`, [텍스트](url), 줄바꿈(\n)
+function renderInlineMarkdown(text) {
+  const escaped = String(text)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+
+  return escaped
+    .replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,
+      '<a href="$2" target="_blank" rel="noopener">$1</a>')
+    .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*([^*]+)\*/g, '<em>$1</em>')
+    .replace(/`([^`]+)`/g, '<code>$1</code>')
+    .replace(/\n/g, '<br>');
 }
 
 load().catch((err) => {
