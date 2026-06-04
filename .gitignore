@@ -300,3 +300,8 @@ node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+### Project local ###
+# Reference design material (not part of the site)
+_ref/
+# Archives
+*.zip

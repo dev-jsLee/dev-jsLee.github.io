@@ -3,35 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio</title>
-    <meta name="description" content="Portfolio landing">
+    <title>Portfolio — jsLee</title>
+    <meta name="description" content="개발자 jsLee의 포트폴리오">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap">
 
     <link rel="stylesheet" href="css/landing.css">
     <script src="https://unpkg.com/lucide@0.294.0/dist/umd/lucide.min.js"></script>
 </head>
 <body>
-    <header class="hero">
+    <header class="hero" data-screen-label="hero">
         <div class="hero-inner">
+            <p class="hero-prompt"><span class="tilde">~</span>/portfolio $ whoami<span class="cursor"></span></p>
             <h1 data-hero="developer"></h1>
             <p class="tagline" data-hero="tagline"></p>
+            <div class="hero-stack" data-hero="stack"></div>
             <div class="hero-links" data-hero="links"></div>
         </div>
     </header>
 
     <main>
-        <section class="about" id="about-section" hidden>
-            <h2 data-about="heading">자기소개</h2>
+        <section class="about" id="about-section" hidden data-screen-label="about">
+            <div class="section-head">
+                <h2 data-index="01" data-about="heading">자기소개</h2>
+            </div>
             <div class="about-qa" id="about-qa"></div>
         </section>
 
-        <section class="projects">
-            <h2>프로젝트</h2>
+        <section class="projects" data-screen-label="projects">
+            <div class="section-head">
+                <h2 data-index="02">프로젝트</h2>
+            </div>
             <div class="project-grid" id="project-grid"></div>
         </section>
     </main>
 
     <footer>
-        <p data-hero="footer"></p>
+        <div class="footer-inner">
+            <p data-hero="footer"></p>
+            <p><a data-hero="repo" href="#" target="_blank" rel="noopener">repository ↗</a></p>
+        </div>
     </footer>
 
     <script src="js/landing.js" type="module"></script>

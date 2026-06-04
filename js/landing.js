@@ -16,6 +16,7 @@ async function load() {
   renderFooter(manifest.site ?? {});
 
   if (window.lucide) window.lucide.createIcons();
+  initReveal();
 }
 
 async function fetchJson(url) {
@@ -66,8 +67,22 @@ function mergeCards(manifestProjects, submoduleSlugs) {
 }
 
 function renderHero(site) {
-  setText('[data-hero="developer"]', site.developer ?? '');
-  setText('[data-hero="tagline"]', site.tagline ?? '');
+  setText('[data-hero="developer"]', stripBrackets(site.developer ?? ''));
+  setText('[data-hero="tagline"]', stripBrackets(site.tagline ?? ''));
+
+  // tech stack chips
+  const stackHost = document.querySelector('[data-hero="stack"]');
+  if (stackHost) {
+    stackHost.innerHTML = '';
+    const stack = Array.isArray(site.stack) ? site.stack : [];
+    for (const item of stack) {
+      const chip = document.createElement('span');
+      chip.className = 'stack-chip';
+      chip.textContent = item;
+      stackHost.appendChild(chip);
+    }
+    stackHost.hidden = stack.length === 0;
+  }
 
   const linksHost = document.querySelector('[data-hero="links"]');
   if (linksHost) {
@@ -107,30 +122,53 @@ function renderAbout(site) {
   setText('[data-about="heading"]', about.heading ?? '자기소개');
 
   host.innerHTML = '';
-  for (const item of qa) {
-    if (!item || (!item.q && !item.a)) continue;
+  qa.forEach((item, i) => {
+    if (!item || (!item.q && !item.a)) return;
 
-    const card = document.createElement('div');
-    card.className = 'about-item';
+    const wrap = document.createElement('div');
+    wrap.className = 'about-item';
+    wrap.dataset.open = i === 0 ? 'true' : 'false';
 
-    const q = document.createElement('p');
-    q.className = 'about-q';
-    const qIcon = document.createElement('i');
-    qIcon.setAttribute('data-lucide', 'message-circle-question');
-    qIcon.className = 'icon';
-    q.appendChild(qIcon);
+    const trigger = document.createElement('button');
+    trigger.className = 'about-trigger';
+    trigger.type = 'button';
+    trigger.setAttribute('aria-expanded', i === 0 ? 'true' : 'false');
+
+    const idx = document.createElement('span');
+    idx.className = 'q-index';
+    idx.textContent = String(i + 1).padStart(2, '0');
+    trigger.appendChild(idx);
+
     const qText = document.createElement('span');
-    qText.innerHTML = ' ' + renderInlineMarkdown(item.q ?? '');
-    q.appendChild(qText);
-    card.appendChild(q);
+    qText.className = 'q-text';
+    qText.innerHTML = renderInlineMarkdown(item.q ?? '');
+    trigger.appendChild(qText);
 
+    const chevron = document.createElement('i');
+    chevron.setAttribute('data-lucide', 'chevron-down');
+    chevron.className = 'q-chevron';
+    trigger.appendChild(chevron);
+
+    const panel = document.createElement('div');
+    panel.className = 'about-panel';
+    const panelInner = document.createElement('div');
+    panelInner.className = 'about-panel-inner';
     const a = document.createElement('p');
     a.className = 'about-a';
     a.innerHTML = renderInlineMarkdown(item.a ?? '');
-    card.appendChild(a);
+    panelInner.appendChild(a);
+    panel.appendChild(panelInner);
 
-    host.appendChild(card);
-  }
+    trigger.addEventListener('click', () => {
+      const open = wrap.dataset.open === 'true';
+      wrap.dataset.open = open ? 'false' : 'true';
+      trigger.setAttribute('aria-expanded', open ? 'false' : 'true');
+    });
+
+    wrap.appendChild(trigger);
+    wrap.appendChild(panel);
+    host.appendChild(wrap);
+  });
 
   section.hidden = false;
 }
@@ -143,14 +181,50 @@ function renderGrid(cards) {
   if (cards.length === 0) {
     const empty = document.createElement('p');
     empty.className = 'empty-state';
-    empty.textContent = '아직 등록된 프로젝트가 없습니다.';
+    empty.textContent = '// 아직 등록된 프로젝트가 없습니다';
     grid.appendChild(empty);
     return;
   }
 
-  for (const card of cards) {
-    grid.appendChild(card.status === 'stub' ? renderStubCard(card) : renderCard(card));
+  cards.forEach((card, i) => {
+    const el = card.status === 'stub' ? renderStubCard(card) : renderCard(card);
+    el.classList.add('reveal');
+    el.style.transitionDelay = `${Math.min(i * 70, 350)}ms`;
+    el.style.setProperty('--card-accent', CARD_ACCENTS[i % CARD_ACCENTS.length]);
+    grid.appendChild(el);
+  });
+}
+
+// rotating accent palette — matched lightness/chroma, hue varies
+const CARD_ACCENTS = [
+  'var(--c-green)',
+  'var(--c-sky)',
+  'var(--c-violet)',
+  'var(--c-amber)',
+  'var(--c-coral)',
+];
+
+function makeThumb(card) {
+  const thumb = document.createElement('div');
+  thumb.className = 'project-thumb';
+  if (card.thumbnail) {
+    const img = document.createElement('img');
+    img.src = card.thumbnail;
+    img.alt = (card.title || card.slug) + ' 미리보기';
+    img.loading = 'lazy';
+    thumb.appendChild(img);
+  } else {
+    thumb.classList.add('placeholder');
+    const label = document.createElement('span');
+    label.textContent = 'thumbnail';
+    thumb.appendChild(label);
+    // faint icon watermark
+    const wm = document.createElement('i');
+    wm.setAttribute('data-lucide', card.icon ?? 'folder');
+    wm.className = 'icon-watermark';
+    thumb.appendChild(wm);
   }
+  return thumb;
 }
 
 function renderCard(card) {
@@ -159,30 +233,36 @@ function renderCard(card) {
   const entry = card.entry || 'index.html';
   a.href = `projects/${card.slug}/${entry}`;
 
-  const header = document.createElement('div');
-  header.className = 'project-card-header';
-  const icon = document.createElement('i');
-  icon.setAttribute('data-lucide', card.icon ?? 'folder');
-  icon.className = 'icon';
-  header.appendChild(icon);
+  if (card.status === 'manifest-only') {
+    a.appendChild(makeBadge('서브모듈 미등록', 'orphan'));
+  }
+
+  a.appendChild(makeThumb(card));
+
+  const body = document.createElement('div');
+  body.className = 'project-body';
+
   const title = document.createElement('div');
   title.className = 'project-card-title';
-  title.textContent = card.title || card.slug;
-  header.appendChild(title);
-  a.appendChild(header);
+  title.appendChild(document.createTextNode(stripBrackets(card.title || card.slug)));
+  const arrow = document.createElement('i');
+  arrow.setAttribute('data-lucide', 'arrow-up-right');
+  arrow.className = 'arrow';
+  title.appendChild(arrow);
+  body.appendChild(title);
 
   if (card.subtitle) {
     const sub = document.createElement('div');
     sub.className = 'project-card-subtitle';
-    sub.textContent = card.subtitle;
-    a.appendChild(sub);
+    sub.textContent = stripBrackets(card.subtitle);
+    body.appendChild(sub);
   }
 
   if (card.description) {
     const desc = document.createElement('p');
     desc.className = 'project-card-description';
-    desc.textContent = card.description;
-    a.appendChild(desc);
+    desc.textContent = stripBrackets(card.description);
+    body.appendChild(desc);
   }
 
   if (Array.isArray(card.tech) && card.tech.length > 0) {
@@ -194,23 +274,20 @@ function renderCard(card) {
       span.textContent = tag;
       meta.appendChild(span);
     }
-    a.appendChild(meta);
+    body.appendChild(meta);
   }
 
   if (card.role) {
     const role = document.createElement('div');
     role.className = 'project-card-role';
     const strong = document.createElement('strong');
-    strong.textContent = '역할:';
+    strong.textContent = 'ROLE';
     role.appendChild(strong);
-    role.appendChild(document.createTextNode(' ' + card.role));
-    a.appendChild(role);
+    role.appendChild(document.createTextNode(stripBrackets(card.role)));
+    body.appendChild(role);
   }
 
-  if (card.status === 'manifest-only') {
-    a.appendChild(makeBadge('서브모듈 미등록', 'orphan'));
-  }
-
+  a.appendChild(body);
   return a;
 }
 
@@ -219,29 +296,28 @@ function renderStubCard(card) {
   a.className = 'project-card stub';
   a.href = `projects/${card.slug}/index.html`;
 
-  const header = document.createElement('div');
-  header.className = 'project-card-header';
-  const icon = document.createElement('i');
-  icon.setAttribute('data-lucide', 'package');
-  icon.className = 'icon';
-  header.appendChild(icon);
+  a.appendChild(makeBadge('META MISSING', 'stub'));
+  a.appendChild(makeThumb(card));
+
+  const body = document.createElement('div');
+  body.className = 'project-body';
+
   const title = document.createElement('div');
   title.className = 'project-card-title';
   title.textContent = card.slug;
-  header.appendChild(title);
-  a.appendChild(header);
+  body.appendChild(title);
 
   const sub = document.createElement('div');
   sub.className = 'project-card-subtitle';
   sub.textContent = '메타데이터 미입력';
-  a.appendChild(sub);
+  body.appendChild(sub);
 
   const desc = document.createElement('p');
   desc.className = 'project-card-description';
   desc.textContent = '이 서브모듈은 .gitmodules에는 등록되었지만 manifest.json에 정보가 없습니다. npm run admin 으로 채워주세요.';
-  a.appendChild(desc);
+  body.appendChild(desc);
 
-  a.appendChild(makeBadge('META MISSING', 'stub'));
+  a.appendChild(body);
   return a;
 }
 
@@ -253,12 +329,45 @@ function makeBadge(text, variant) {
 }
 
 function renderFooter(site) {
-  setText('[data-hero="footer"]', site.footer ?? '');
+  setText('[data-hero="footer"]', stripBrackets(site.footer ?? ''));
+  const repo = document.querySelector('[data-hero="repo"]');
+  if (repo) {
+    if (site.repoUrl) {
+      repo.href = site.repoUrl;
+      repo.hidden = false;
+    } else {
+      repo.hidden = true;
+    }
+  }
+}
+
+function initReveal() {
+  const items = document.querySelectorAll('.reveal');
+  if (!('IntersectionObserver' in window) || items.length === 0) {
+    items.forEach((el) => el.classList.add('is-visible'));
+    return;
+  }
+  const io = new IntersectionObserver((entries) => {
+    for (const entry of entries) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        io.unobserve(entry.target);
+      }
+    }
+  }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+  items.forEach((el) => io.observe(el));
 }
 
 function setText(selector, text) {
   const el = document.querySelector(selector);
   if (el) el.textContent = text;
+}
+
+// 콘텐츠에 남아있는 [플레이스홀더 대괄호] 정리 — 바깥을 감싼 한 쌍만 제거
+function stripBrackets(text) {
+  const t = String(text).trim();
+  if (t.startsWith('[') && t.endsWith(']')) return t.slice(1, -1);
+  return text;
 }
 
 // 안전한 인라인 마크다운: HTML을 먼저 이스케이프한 뒤 일부 문법만 변환.
