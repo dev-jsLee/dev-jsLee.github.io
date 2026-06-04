@@ -4,7 +4,6 @@
     "developer": "[이준상]",
     "tagline": "[AI를 적극 활용하는 올라운더 개발자]",
     "links": [
-    "leas": [
       { "label": "GitHub", "url": "https://github.com/dev-jslee", "icon": "github" },
       { "label": "Gitea", "url": "https://git.kwonluna.co.kr/jslee7518", "icon": "gitea" },
       { "label": "Email", "url": "mailto:dev.jslee@gmail.com", "icon": "mail" }
