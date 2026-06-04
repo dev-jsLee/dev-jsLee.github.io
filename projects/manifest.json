@@ -4,7 +4,7 @@
     "developer": "[이준상]",
     "tagline": "[AI를 적극 활용하는 올라운더 개발자]",
     "links": [
-      { "label": "GitHub", "url": "https://githu  b.com/dev-jslee", "icon": "github" },
+      { "label": "GitHub", "url": "https://github.com/dev-jslee", "icon": "github" },
       { "label": "Email", "url": "mailto:dev.jslee@gmail.com", "icon": "mail" }
     ],
     "footer": "© [이준상] — Portfolio",
