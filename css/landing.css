@@ -1,18 +1,18 @@
 /* ============================================================
    dev-jsLee.github.io — Portfolio landing
-   Dark / tech aesthetic · neutral grays · sans + mono mix
+   Dark / tech aesthetic · deep navy · sans + mono mix
    ============================================================ */
 
 :root {
-  /* surfaces — cool near-black neutral scale */
-  --bg-page: #0d0e11;
-  --bg-elev: #15171c;
-  --bg-elev-2: #1b1e24;
-  --bg-inset: #101216;
+  /* surfaces — navy (밝은 푸른 남색) */
+  --bg-page: #1c2438;
+  --bg-elev: #252f47;
+  --bg-elev-2: #2f3a56;
+  --bg-inset: #202940;
 
-  /* lines */
-  --border: #23262d;
-  --border-strong: #313640;
+  /* lines — 네이비에 맞춰 약간 푸르게 */
+  --border: #353f5b;
+  --border-strong: #4a5675;
 
   /* text */
   --text: #e7e9ee;
