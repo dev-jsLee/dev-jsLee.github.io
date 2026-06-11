@@ -1,0 +1,296 @@
+/* ============================================================
+   project.css — 프로젝트 상세(케이스 스터디) 페이지
+   landing.css 의 :root 토큰을 그대로 사용한다.
+   ============================================================ */
+
+.project-main {
+  flex: 1;
+  width: 100%;
+  max-width: 820px;
+  margin: 0 auto;
+  padding: clamp(2.5rem, 7vh, 4.5rem) 1.5rem;
+}
+
+/* 로딩 / 에러 */
+.detail-loading,
+.detail-error {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  color: var(--text-dim);
+  text-align: center;
+  padding: 3rem 0 1rem;
+}
+
+.detail-error {
+  color: var(--c-coral);
+}
+
+.detail-error-back {
+  text-align: center;
+}
+
+.detail-error-back a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+/* ---- back ---- */
+.detail-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-decoration: none;
+  margin-bottom: 2rem;
+  transition: color 0.18s, transform 0.18s;
+}
+
+.detail-back:hover {
+  color: var(--accent);
+  transform: translateX(-2px);
+}
+
+.detail-back .icon {
+  width: 1rem;
+  height: 1rem;
+}
+
+/* ============================================================
+   HEAD
+   ============================================================ */
+.detail-head {
+  padding-bottom: 2rem;
+  margin-bottom: 2.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.detail-category {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--accent);
+  background: var(--accent-dim);
+  border: 1px solid var(--accent-line);
+  border-radius: 999px;
+  padding: 0.2rem 0.7rem;
+  margin-bottom: 1rem;
+}
+
+.detail-title {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  margin-bottom: 0.6rem;
+}
+
+.detail-subtitle {
+  font-size: clamp(1.05rem, 2.2vw, 1.25rem);
+  color: var(--text-muted);
+  margin-bottom: 1.4rem;
+  text-wrap: pretty;
+}
+
+.detail-tech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 1.8rem;
+}
+
+.detail-tech .tag {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.02em;
+  padding: 0.25rem 0.6rem;
+  background: var(--bg-elev-2);
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+}
+
+/* ---- CTA buttons ---- */
+.detail-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.2rem;
+  font-size: 0.92rem;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: var(--radius);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: transform 0.18s, border-color 0.18s, background 0.18s, color 0.18s, box-shadow 0.18s;
+}
+
+.cta .icon {
+  width: 1rem;
+  height: 1rem;
+}
+
+.cta-primary {
+  background: var(--accent);
+  color: #07140c;
+  border-color: var(--accent);
+}
+
+.cta-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px -12px var(--accent);
+}
+
+.cta-secondary {
+  background: var(--bg-elev);
+  color: var(--text);
+  border-color: var(--border-strong);
+}
+
+.cta-secondary:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent-line);
+  color: var(--accent);
+}
+
+.cta-ghost {
+  background: none;
+  color: var(--text-muted);
+  border-color: transparent;
+}
+
+.cta-ghost:hover {
+  color: var(--accent);
+}
+
+.cta-lg {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+}
+
+/* ============================================================
+   SECTIONS
+   ============================================================ */
+.detail-section {
+  margin-bottom: 2.6rem;
+}
+
+.detail-section h2 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: baseline;
+  gap: 0.55rem;
+}
+
+.detail-section h2::before {
+  content: "#";
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--c-sky);
+}
+
+.detail-prose {
+  font-size: 0.98rem;
+  line-height: 1.8;
+  color: var(--text);
+  text-wrap: pretty;
+}
+
+.detail-prose code {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  background: var(--bg-elev-2);
+  color: var(--accent);
+  padding: 0.12em 0.42em;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+}
+
+.detail-prose a {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid var(--accent-line);
+}
+
+.detail-prose a:hover {
+  border-bottom-color: var(--accent);
+}
+
+/* 주요 기능 */
+.detail-features {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.detail-features li {
+  position: relative;
+  padding-left: 1.5rem;
+  font-size: 0.98rem;
+  line-height: 1.7;
+  color: var(--text);
+}
+
+.detail-features li::before {
+  content: "›";
+  position: absolute;
+  left: 0.2rem;
+  top: 0;
+  color: var(--accent);
+  font-weight: 700;
+}
+
+/* 스크린샷 */
+.detail-shots {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1rem;
+}
+
+.detail-shot {
+  margin: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--bg-elev);
+}
+
+.detail-shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.detail-shot figcaption {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  padding: 0.6rem 0.8rem;
+  border-top: 1px solid var(--border);
+}
+
+/* ============================================================
+   FOOT CTA
+   ============================================================ */
+.detail-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.8rem;
+  padding-top: 2.2rem;
+  margin-top: 1rem;
+  border-top: 1px solid var(--border);
+}

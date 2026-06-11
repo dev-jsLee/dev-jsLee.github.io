@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project — jsLee</title>
+    <meta name="description" content="프로젝트 상세">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap">
+
+    <link rel="stylesheet" href="css/landing.css">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/project.css">
+
+    <!-- 저장된 테마를 스타일 적용 전에 미리 반영 (FOUC 방지) -->
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          if (t) document.documentElement.dataset.theme = t;
+        } catch (e) {}
+      })();
+    </script>
+
+    <script src="https://unpkg.com/lucide@0.294.0/dist/umd/lucide.min.js"></script>
+</head>
+<body class="project-page">
+    <main class="project-main">
+        <div class="project-detail is-loading" id="project-detail">
+            <p class="detail-loading">// 프로젝트 정보를 불러오는 중…</p>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-inner">
+            <p>© jsLee — Portfolio</p>
+            <p><a href="index.html#projects">← projects</a></p>
+        </div>
+    </footer>
+
+    <script src="js/header.js" type="module"></script>
+    <script src="js/project.js" type="module"></script>
+</body>
+</html>

@@ -173,26 +173,65 @@ function renderAbout(site) {
   section.hidden = false;
 }
 
+// 프로젝트 카테고리 그룹 — 정의된 순서대로, 항목이 있는 그룹만 렌더한다.
+// 알 수 없는/미지정 category 는 마지막 그룹(개인)으로 모은다.
+const CATEGORY_GROUPS = [
+  { key: 'work', label: '실무' },
+  { key: 'personal', label: '개인' },
+];
+const FALLBACK_CATEGORY = 'personal';
+
 function renderGrid(cards) {
-  const grid = document.getElementById('project-grid');
-  if (!grid) return;
-  grid.innerHTML = '';
+  const host = document.getElementById('project-groups');
+  if (!host) return;
+  host.innerHTML = '';
 
   if (cards.length === 0) {
     const empty = document.createElement('p');
     empty.className = 'empty-state';
     empty.textContent = '// 아직 등록된 프로젝트가 없습니다';
-    grid.appendChild(empty);
+    host.appendChild(empty);
     return;
   }
 
-  cards.forEach((card, i) => {
-    const el = card.status === 'stub' ? renderStubCard(card) : renderCard(card);
-    el.classList.add('reveal');
-    el.style.transitionDelay = `${Math.min(i * 70, 350)}ms`;
-    el.style.setProperty('--card-accent', CARD_ACCENTS[i % CARD_ACCENTS.length]);
-    grid.appendChild(el);
-  });
+  // 카테고리별로 버킷에 담는다
+  const knownKeys = CATEGORY_GROUPS.map((g) => g.key);
+  const buckets = new Map(CATEGORY_GROUPS.map((g) => [g.key, []]));
+  for (const card of cards) {
+    const cat = knownKeys.includes(card.category) ? card.category : FALLBACK_CATEGORY;
+    buckets.get(cat).push(card);
+  }
+
+  // 등장 애니메이션·액센트는 그룹을 가로질러 연속 인덱스로
+  let i = 0;
+  for (const group of CATEGORY_GROUPS) {
+    const items = buckets.get(group.key);
+    if (!items.length) continue; // 비어 있는 그룹은 건너뜀
+
+    const groupEl = document.createElement('div');
+    groupEl.className = 'project-group';
+
+    const title = document.createElement('h3');
+    title.className = 'project-group-title';
+    title.textContent = group.label;
+    title.dataset.count = items.length;
+    groupEl.appendChild(title);
+
+    const grid = document.createElement('div');
+    grid.className = 'project-grid';
+
+    for (const card of items) {
+      const el = card.status === 'stub' ? renderStubCard(card) : renderCard(card);
+      el.classList.add('reveal');
+      el.style.transitionDelay = `${Math.min(i * 70, 350)}ms`;
+      el.style.setProperty('--card-accent', CARD_ACCENTS[i % CARD_ACCENTS.length]);
+      grid.appendChild(el);
+      i++;
+    }
+
+    groupEl.appendChild(grid);
+    host.appendChild(groupEl);
+  }
 }
 
 // rotating accent palette — matched lightness/chroma, hue varies
@@ -230,8 +269,8 @@ function makeThumb(card) {
 function renderCard(card) {
   const a = document.createElement('a');
   a.className = 'project-card';
-  const entry = card.entry || 'index.html';
-  a.href = `projects/${card.slug}/${entry}`;
+  // 카드는 데모로 직행하지 않고 상세(케이스 스터디) 페이지로 — 설명 후 데모 링크 제공
+  a.href = `project.html?slug=${encodeURIComponent(card.slug)}`;
 
   if (card.status === 'manifest-only') {
     a.appendChild(makeBadge('서브모듈 미등록', 'orphan'));
@@ -389,8 +428,8 @@ function renderInlineMarkdown(text) {
 
 load().catch((err) => {
   console.error('[landing] load failed:', err);
-  const grid = document.getElementById('project-grid');
-  if (grid) {
-    grid.innerHTML = `<p class="empty-state">manifest.json 로드 실패: ${err.message}</p>`;
+  const host = document.getElementById('project-groups');
+  if (host) {
+    host.innerHTML = `<p class="empty-state">manifest.json 로드 실패: ${err.message}</p>`;
   }
 });

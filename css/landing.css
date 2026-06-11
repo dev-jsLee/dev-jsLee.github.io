@@ -467,6 +467,43 @@ section:last-child {
 /* ============================================================
    PROJECTS — compact cards
    ============================================================ */
+/* 카테고리 그룹 (실무 / 개인) */
+.project-groups {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.project-group-title {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--text-muted);
+  margin-bottom: 1.1rem;
+}
+
+.project-group-title::before {
+  content: "›";
+  color: var(--accent);
+  font-size: 1.05rem;
+  line-height: 1;
+}
+
+.project-group-title::after {
+  content: attr(data-count);
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--text-dim);
+  background: var(--bg-elev-2);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.05rem 0.5rem;
+}
+
 .project-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
