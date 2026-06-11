@@ -124,14 +124,29 @@ function renderHead(project, detail) {
   return head;
 }
 
+// 라이브 데모/사이트 URL — 외부 운영 사이트(liveUrl)가 있으면 그것을, 없으면 로컬 데모를.
+function demoUrlOf(project) {
+  if (project.liveUrl) return project.liveUrl;
+  const entry = project.entry || 'index.html';
+  return `projects/${project.slug}/${entry}`;
+}
+
+function applyDemoLink(a, project) {
+  const url = demoUrlOf(project);
+  a.href = url;
+  if (/^https?:\/\//.test(url)) {
+    a.target = '_blank';
+    a.rel = 'noopener';
+  }
+}
+
 function renderCta(project, detail) {
   const cta = document.createElement('div');
   cta.className = 'detail-cta';
 
-  const entry = project.entry || 'index.html';
   const demo = document.createElement('a');
   demo.className = 'cta cta-primary';
-  demo.href = `projects/${project.slug}/${entry}`;
+  applyDemoLink(demo, project);
   demo.innerHTML = '<i data-lucide="external-link" class="icon"></i> 라이브 데모';
   cta.appendChild(demo);
 
@@ -245,10 +260,9 @@ function renderFootCta(project, detail) {
   const foot = document.createElement('div');
   foot.className = 'detail-foot';
 
-  const entry = project.entry || 'index.html';
   const demo = document.createElement('a');
   demo.className = 'cta cta-primary cta-lg';
-  demo.href = `projects/${project.slug}/${entry}`;
+  applyDemoLink(demo, project);
   demo.innerHTML = '<i data-lucide="external-link" class="icon"></i> 라이브 데모 열기';
   foot.appendChild(demo);
 

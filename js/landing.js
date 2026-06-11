@@ -47,7 +47,8 @@ function mergeCards(manifestProjects, submoduleSlugs) {
 
   for (const p of manifestProjects) {
     if (!p.slug) continue;
-    bySlug.set(p.slug, { ...p, status: submoduleSlugs.has(p.slug) ? 'ok' : 'manifest-only' });
+    // manifest 에 정의된 프로젝트는 정상 처리 (외부 운영 사이트 등 로컬 폴더가 없을 수 있음)
+    bySlug.set(p.slug, { ...p, status: 'ok' });
   }
 
   for (const slug of submoduleSlugs) {
@@ -271,10 +272,6 @@ function renderCard(card) {
   a.className = 'project-card';
   // 카드는 데모로 직행하지 않고 상세(케이스 스터디) 페이지로 — 설명 후 데모 링크 제공
   a.href = `project.html?slug=${encodeURIComponent(card.slug)}`;
-
-  if (card.status === 'manifest-only') {
-    a.appendChild(makeBadge('서브모듈 미등록', 'orphan'));
-  }
 
   a.appendChild(makeThumb(card));
 

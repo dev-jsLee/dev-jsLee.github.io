@@ -56,6 +56,84 @@
         "learnings": "[이 프로젝트에서 배운 점이나 회고를 적으세요. 어려웠던 점과 그걸 어떻게 풀었는지.]",
         "screenshots": []
       }
+    },
+    {
+      "slug": "car",
+      "title": "차량 운행일지",
+      "subtitle": "사내 차량 운행 기록 관리",
+      "description": "전 직장에서 사내 사용을 위해 개인적으로 개발한 차량 운행일지 사이트.",
+      "role": "개인 개발",
+      "category": "work",
+      "icon": "car",
+      "thumbnail": null,
+      "liveUrl": "https://car.kwonluna.co.kr",
+      "repoUrl": null,
+      "order": 1,
+      "detail": {
+        "overview": "전 직장에서 사내에서 사용할 목적으로 개인적으로 개발한 차량 운행일지 관리 사이트입니다."
+      }
+    },
+    {
+      "slug": "student",
+      "title": "수업용 DB 신청",
+      "subtitle": "Oracle 계정 자동 발급",
+      "description": "관리자가 신청을 수락하면 권한이 부여된 Oracle DB 계정을 자동으로 생성해주는 온라인 신청 사이트.",
+      "tech": ["Oracle DB"],
+      "category": "personal",
+      "icon": "database",
+      "thumbnail": null,
+      "liveUrl": "https://student.kwonluna.co.kr",
+      "repoUrl": null,
+      "order": 2,
+      "detail": {
+        "overview": "수업에서 사용할 Oracle DB 계정을 온라인으로 신청하고, 관리자가 수락하면 권한이 부여된 계정이 자동으로 생성되는 시스템입니다."
+      }
+    },
+    {
+      "slug": "graph",
+      "title": "함수 사운드화",
+      "subtitle": "수학 함수를 소리로 변환",
+      "description": "수학 함수를 소리로 변환해 들려주는 웹앱. 프론트엔드만 서빙합니다.",
+      "category": "personal",
+      "icon": "waves",
+      "thumbnail": null,
+      "liveUrl": "https://graph.kwonluna.co.kr",
+      "repoUrl": null,
+      "order": 3,
+      "detail": {
+        "overview": "수학 함수를 소리로 변환해 청각으로 탐색할 수 있게 한 웹앱입니다. 프론트엔드만 서빙합니다."
+      }
+    },
+    {
+      "slug": "chat",
+      "title": "일정 공유",
+      "subtitle": "CalDAV 기반 일정 공유",
+      "description": "CalDAV를 이용해 일정을 공유하는 서비스. (개발 중)",
+      "tech": ["CalDAV"],
+      "category": "personal",
+      "icon": "calendar",
+      "thumbnail": null,
+      "liveUrl": "https://chat.kwonluna.co.kr",
+      "repoUrl": null,
+      "order": 4,
+      "detail": {
+        "overview": "CalDAV 프로토콜을 이용해 일정을 공유하는 서비스입니다. 현재 개발 중입니다."
+      }
+    },
+    {
+      "slug": "robots",
+      "title": "robots.txt 검색",
+      "subtitle": "에이전트를 위한 robots.txt 수집·검색",
+      "description": "여러 사이트의 robots.txt를 수집해 AI 에이전트가 검색할 수 있게 하는 사이트. (개발 중)",
+      "category": "personal",
+      "icon": "bot",
+      "thumbnail": null,
+      "liveUrl": "https://robots.kwonluna.co.kr",
+      "repoUrl": null,
+      "order": 5,
+      "detail": {
+        "overview": "AI 에이전트가 참고할 수 있도록 여러 사이트의 robots.txt를 수집하고 검색할 수 있게 하는 사이트입니다. 현재 개발 중입니다."
+      }
     }
   ]
 }
