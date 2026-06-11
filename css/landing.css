@@ -45,6 +45,98 @@
     "Source Code Pro", Menlo, Consolas, monospace;
 }
 
+/* ============================================================
+   THEME — 기본은 위 :root(다크). 라이트는 명시 토글 또는 시스템 설정.
+   토글 시 <html data-theme="light|dark">, 미설정 시 prefers-color-scheme.
+   ============================================================ */
+:root[data-theme="light"] {
+  --bg-page: #f6f7f9;
+  --bg-elev: #ffffff;
+  --bg-elev-2: #eef1f5;
+  --bg-inset: #e9edf2;
+
+  --border: #e3e7ed;
+  --border-strong: #ccd2db;
+
+  --text: #1a1d23;
+  --text-muted: #515a68;
+  --text-dim: #828c9c;
+
+  --accent: #1f9d57;
+  --accent-dim: rgba(31, 157, 87, 0.12);
+  --accent-line: rgba(31, 157, 87, 0.4);
+  --c-green: oklch(0.62 0.16 158);
+  --c-sky: oklch(0.6 0.15 232);
+  --c-violet: oklch(0.56 0.17 300);
+  --c-amber: oklch(0.66 0.14 70);
+  --c-coral: oklch(0.6 0.18 24);
+
+  --shadow: 0 1px 2px rgba(15, 23, 42, 0.08);
+  --shadow-lg: 0 18px 40px -20px rgba(15, 23, 42, 0.22);
+}
+
+/* 명시 설정이 없을 때만 시스템 라이트 모드를 따른다 */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) {
+    --bg-page: #f6f7f9;
+    --bg-elev: #ffffff;
+    --bg-elev-2: #eef1f5;
+    --bg-inset: #e9edf2;
+
+    --border: #e3e7ed;
+    --border-strong: #ccd2db;
+
+    --text: #1a1d23;
+    --text-muted: #515a68;
+    --text-dim: #828c9c;
+
+    --accent: #1f9d57;
+    --accent-dim: rgba(31, 157, 87, 0.12);
+    --accent-line: rgba(31, 157, 87, 0.4);
+    --c-green: oklch(0.62 0.16 158);
+    --c-sky: oklch(0.6 0.15 232);
+    --c-violet: oklch(0.56 0.17 300);
+    --c-amber: oklch(0.66 0.14 70);
+    --c-coral: oklch(0.6 0.18 24);
+
+    --shadow: 0 1px 2px rgba(15, 23, 42, 0.08);
+    --shadow-lg: 0 18px 40px -20px rgba(15, 23, 42, 0.22);
+  }
+}
+
+/* 라이트 모드에서만 어두운 배경 전제의 장식 보정 (명시 토글) */
+:root[data-theme="light"] .hero::before {
+  background-image: radial-gradient(circle, rgba(15, 23, 42, 0.05) 1px, transparent 1px);
+}
+
+:root[data-theme="light"] .icon-watermark {
+  color: rgba(15, 23, 42, 0.06);
+}
+
+/* 시스템 라이트 + 명시 설정 없음 */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) .hero::before {
+    background-image: radial-gradient(circle, rgba(15, 23, 42, 0.05) 1px, transparent 1px);
+  }
+  :root:not([data-theme]) .icon-watermark {
+    color: rgba(15, 23, 42, 0.06);
+  }
+}
+
+/* 테마 전환을 부드럽게 */
+@media (prefers-reduced-motion: no-preference) {
+  body,
+  .site-header,
+  .project-card,
+  .about-item,
+  .stack-chip,
+  .hero-link,
+  .resume-doc,
+  .pdf-page {
+    transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+  }
+}
+
 * {
   box-sizing: border-box;
   margin: 0;

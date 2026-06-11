@@ -4,13 +4,10 @@
    ============================================================ */
 
 /* ---- top bar ---- */
+/* 전역 .site-header 가 sticky 를 담당하므로 여기는 일반 흐름에 둔다 */
 .resume-topbar {
-  position: sticky;
-  top: 0;
-  z-index: 10;
   border-bottom: 1px solid var(--border);
-  background: color-mix(in oklch, var(--bg-page) 86%, transparent);
-  backdrop-filter: blur(8px);
+  background: var(--bg-inset);
 }
 
 .resume-topbar-inner {

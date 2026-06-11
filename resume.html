@@ -12,12 +12,23 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap">
 
     <link rel="stylesheet" href="css/landing.css">
+    <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="css/resume.css">
+
+    <!-- 저장된 테마를 스타일 적용 전에 미리 반영 (FOUC 방지) -->
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          if (t) document.documentElement.dataset.theme = t;
+        } catch (e) {}
+      })();
+    </script>
 
     <script src="https://unpkg.com/lucide@0.294.0/dist/umd/lucide.min.js"></script>
 </head>
 <body class="resume-page">
-    <header class="resume-topbar">
+    <div class="resume-topbar">
         <div class="resume-topbar-inner">
             <a class="resume-back" href="index.html">
                 <i data-lucide="arrow-left" class="icon"></i>
@@ -31,7 +42,7 @@
                 PDF 다운로드
             </a>
         </div>
-    </header>
+    </div>
 
     <main class="resume-main">
         <article class="resume-doc is-loading" id="resume-content">
@@ -46,6 +57,7 @@
         </div>
     </footer>
 
+    <script src="js/header.js" type="module"></script>
     <script src="js/resume.js" type="module"></script>
 </body>
 </html>

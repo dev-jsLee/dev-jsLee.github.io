@@ -1,0 +1,153 @@
+/* ============================================================
+   header.css — 모든 메인 페이지 공통 헤더 + 사이트맵 + 테마 토글
+   landing.css 의 :root 토큰을 그대로 사용한다.
+   ============================================================ */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  border-bottom: 1px solid var(--border);
+  background: color-mix(in oklch, var(--bg-page) 82%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.site-header-inner {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0.7rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+/* ---- brand ---- */
+.site-brand {
+  font-weight: 800;
+  font-size: 1.05rem;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.1rem;
+}
+
+.site-brand .brand-mark {
+  font-family: var(--font-mono);
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: var(--accent);
+}
+
+/* ---- right actions group ---- */
+.site-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+/* ---- nav (sitemap) ---- */
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.site-nav a {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.45rem 0.8rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-decoration: none;
+  border-radius: var(--radius);
+  transition: color 0.18s, background 0.18s;
+}
+
+.site-nav a:hover {
+  color: var(--text);
+  background: var(--bg-elev);
+}
+
+.site-nav a[aria-current="page"] {
+  color: var(--accent);
+  background: var(--accent-dim);
+}
+
+/* ---- icon buttons (theme toggle, mobile menu) ---- */
+.theme-toggle,
+.nav-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.3rem;
+  height: 2.3rem;
+  padding: 0;
+  background: var(--bg-elev);
+  color: var(--text-muted);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: color 0.18s, border-color 0.18s, background 0.18s, transform 0.18s;
+}
+
+.theme-toggle:hover,
+.nav-toggle:hover {
+  color: var(--accent);
+  border-color: var(--accent-line);
+  transform: translateY(-1px);
+}
+
+.theme-toggle .icon,
+.nav-toggle .icon {
+  width: 1.15rem;
+  height: 1.15rem;
+}
+
+/* mobile menu button hidden on desktop */
+.nav-toggle {
+  display: none;
+}
+
+/* ============================================================
+   RESPONSIVE — 모바일에서 nav 를 드롭다운 패널로
+   ============================================================ */
+@media (max-width: 720px) {
+  .nav-toggle {
+    display: inline-flex;
+  }
+
+  .site-nav {
+    position: absolute;
+    top: 100%;
+    right: 1rem;
+    left: 1rem;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.15rem;
+    padding: 0.5rem;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    opacity: 0;
+    transform: translateY(-8px);
+    pointer-events: none;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+
+  .site-nav.is-open {
+    opacity: 1;
+    transform: translateY(0.4rem);
+    pointer-events: auto;
+  }
+
+  .site-nav a {
+    padding: 0.65rem 0.9rem;
+    font-size: 0.95rem;
+  }
+}
