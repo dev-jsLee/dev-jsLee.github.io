@@ -124,31 +124,46 @@ function renderHead(project, detail) {
   return head;
 }
 
-// 라이브 데모/사이트 URL — 외부 운영 사이트(liveUrl)가 있으면 그것을, 없으면 로컬 데모를.
-function demoUrlOf(project) {
-  if (project.liveUrl) return project.liveUrl;
-  const entry = project.entry || 'index.html';
-  return `projects/${project.slug}/${entry}`;
+// 데모 버튼 목록 — 종류별로 알맞은 라벨을 붙인다 (첫 번째 = primary).
+//  · 라이브 데모: 실제 동작하는 운영 사이트 (liveUrl)
+//  · UI 데모: 화면만 서빙하는 디자인 확인용 사이트 (designUrl)
+function demoButtons(project) {
+  const out = [];
+  if (project.liveUrl) {
+    out.push({ url: project.liveUrl, label: '라이브 데모', icon: 'external-link' });
+  }
+  if (project.designUrl) {
+    out.push({ url: project.designUrl, label: 'UI 데모', icon: 'monitor' });
+  }
+  // 둘 다 없으면 로컬 화면을 UI 데모로 폴백 (기존 동작 보존)
+  if (!out.length) {
+    const entry = project.entry || 'index.html';
+    out.push({ url: `projects/${project.slug}/${entry}`, label: 'UI 데모', icon: 'monitor' });
+  }
+  return out;
 }
 
-function applyDemoLink(a, project) {
-  const url = demoUrlOf(project);
-  a.href = url;
-  if (/^https?:\/\//.test(url)) {
-    a.target = '_blank';
-    a.rel = 'noopener';
-  }
+function appendDemoButtons(container, project, { large = false } = {}) {
+  demoButtons(project).forEach((b, i) => {
+    const a = document.createElement('a');
+    const cls = ['cta', i === 0 ? 'cta-primary' : 'cta-secondary'];
+    if (large && i === 0) cls.push('cta-lg');
+    a.className = cls.join(' ');
+    a.href = b.url;
+    if (/^https?:\/\//.test(b.url)) {
+      a.target = '_blank';
+      a.rel = 'noopener';
+    }
+    a.innerHTML = `<i data-lucide="${b.icon}" class="icon"></i> ${b.label}`;
+    container.appendChild(a);
+  });
 }
 
 function renderCta(project, detail) {
   const cta = document.createElement('div');
   cta.className = 'detail-cta';
 
-  const demo = document.createElement('a');
-  demo.className = 'cta cta-primary';
-  applyDemoLink(demo, project);
-  demo.innerHTML = '<i data-lucide="external-link" class="icon"></i> 라이브 데모';
-  cta.appendChild(demo);
+  appendDemoButtons(cta, project);
 
   if (project.repoUrl) {
     const repo = document.createElement('a');
@@ -260,11 +275,7 @@ function renderFootCta(project, detail) {
   const foot = document.createElement('div');
   foot.className = 'detail-foot';
 
-  const demo = document.createElement('a');
-  demo.className = 'cta cta-primary cta-lg';
-  applyDemoLink(demo, project);
-  demo.innerHTML = '<i data-lucide="external-link" class="icon"></i> 라이브 데모 열기';
-  foot.appendChild(demo);
+  appendDemoButtons(foot, project, { large: true });
 
   const back = document.createElement('a');
   back.className = 'cta cta-ghost';

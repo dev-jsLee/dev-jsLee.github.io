@@ -42,6 +42,8 @@
       "entry": "index.html",
       "icon": "book-open",
       "thumbnail": null,
+      "designUrl": "projects/tams/index.html",
+      "liveUrl": "https://tams.kwonluna.co.kr",
       "repoUrl": null,
       "order": 1,
       "detail": {
