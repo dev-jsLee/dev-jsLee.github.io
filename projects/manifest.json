@@ -5,6 +5,7 @@
     "tagline": "[AI를 적극 활용하는 올라운더 개발자]",
     "stack": ["HTML / CSS", "Vanilla JS", "Python", "Node.js", "GCP", "AI / LLM"],
     "links": [
+      { "label": "Resume", "url": "resume.html", "icon": "file-text" },
       { "label": "GitHub", "url": "https://github.com/dev-jslee", "icon": "github" },
       { "label": "Gitea", "url": "https://git.kwonluna.co.kr/jslee7518", "icon": "git-branch" },
       { "label": "Email", "url": "mailto:dev.jslee@gmail.com", "icon": "mail" }

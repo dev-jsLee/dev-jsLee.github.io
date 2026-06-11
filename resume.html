@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume — jsLee</title>
+    <meta name="description" content="개발자 jsLee의 이력서">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap">
+
+    <link rel="stylesheet" href="css/landing.css">
+    <link rel="stylesheet" href="css/resume.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/mammoth@1.6.0/mammoth.browser.min.js"></script>
+    <script src="https://unpkg.com/lucide@0.294.0/dist/umd/lucide.min.js"></script>
+</head>
+<body class="resume-page">
+    <header class="resume-topbar">
+        <div class="resume-topbar-inner">
+            <a class="resume-back" href="index.html">
+                <i data-lucide="arrow-left" class="icon"></i>
+                포트폴리오
+            </a>
+            <p class="resume-prompt">
+                <span class="tilde">~</span>/portfolio $ cat resume.docx<span class="cursor"></span>
+            </p>
+        </div>
+    </header>
+
+    <main class="resume-main">
+        <article class="resume-doc is-loading" id="resume-content">
+            <p class="resume-loading">// 이력서 불러오는 중…</p>
+        </article>
+    </main>
+
+    <footer>
+        <div class="footer-inner">
+            <p>© jsLee — Resume</p>
+            <p><a href="index.html">← portfolio</a></p>
+        </div>
+    </footer>
+
+    <script src="js/resume.js" type="module"></script>
+</body>
+</html>
