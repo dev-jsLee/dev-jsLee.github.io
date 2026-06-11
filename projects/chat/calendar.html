@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CalDAVchat — 캘린더</title>
+  <link rel="icon" href="/projects/chat/assets/favicon.ico">
+  <link rel="stylesheet" href="/projects/chat/css/common.css">
+  <link rel="stylesheet" href="/projects/chat/css/calendar.css">
+</head>
+<body class="calendar-page">
+  <nav class="app-nav">
+    <a href="/projects/chat/calendar.html" class="nav-logo">📅 CalDAVchat</a>
+    <div class="nav-actions">
+      <a href="/projects/chat/search.html" class="nav-icon-btn" title="검색" aria-label="검색">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+        </svg>
+      </a>
+      <button type="button" class="nav-icon-btn" id="import-ics-btn" title="ICS 가져오기" aria-label="ICS 가져오기">📤</button>
+      <button type="button" class="nav-icon-btn" id="export-ics-btn" title="ICS 내보내기" aria-label="ICS 내보내기">📥</button>
+      <button type="button" class="nav-icon-btn theme-toggle-btn" id="theme-toggle-btn" title="테마 전환" aria-label="테마 전환">
+        <span class="theme-icon-light">🌙</span>
+        <span class="theme-icon-dark">☀️</span>
+      </button>
+      <div class="nav-avatar avatar" id="nav-avatar" style="background:#2563EB">나</div>
+    </div>
+  </nav>
+
+  <input type="file" id="ics-file-input" accept=".ics,text/calendar" hidden>
+
+  <main class="calendar-main">
+    <div class="calendar-container">
+      <div class="calendar-nav">
+        <button type="button" class="calendar-nav-prev btn btn-ghost" id="cal-prev" aria-label="이전 달">‹</button>
+        <h2 class="calendar-month-title" id="calendar-month-title">2026년 3월</h2>
+        <button type="button" class="calendar-nav-next btn btn-ghost" id="cal-next" aria-label="다음 달">›</button>
+      </div>
+
+      <div class="calendar-header" role="row">
+        <div class="calendar-header-cell" role="columnheader">일</div>
+        <div class="calendar-header-cell" role="columnheader">월</div>
+        <div class="calendar-header-cell" role="columnheader">화</div>
+        <div class="calendar-header-cell" role="columnheader">수</div>
+        <div class="calendar-header-cell" role="columnheader">목</div>
+        <div class="calendar-header-cell" role="columnheader">금</div>
+        <div class="calendar-header-cell" role="columnheader">토</div>
+      </div>
+
+      <div class="calendar-grid" id="calendar-grid" role="grid"></div>
+    </div>
+
+    <div class="event-list-section" id="event-list-section">
+      <h3 class="event-list-title" id="event-list-title">날짜를 선택하세요</h3>
+      <div class="event-list" id="event-list">
+        <div class="empty-state">
+          <div class="empty-state-icon">📅</div>
+          <p class="empty-state-title">날짜를 클릭하면 일정을 볼 수 있습니다</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <button type="button" class="fab-create" id="fab-create" title="일정 생성" aria-label="새 일정 만들기">+</button>
+
+  <div class="modal-overlay" id="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title" style="display:none">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modal-title">새 일정</h3>
+        <button type="button" class="modal-close-btn" id="modal-close-btn" aria-label="닫기">×</button>
+      </div>
+      <div class="modal-body">
+        <input type="text" class="input" id="modal-event-title" placeholder="일정 제목을 입력하세요" maxlength="200" aria-label="일정 제목">
+        <p class="modal-date-hint" id="modal-date-hint"></p>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-primary" id="modal-create-btn">생성</button>
+        <a href="/projects/chat/event-create.html" class="btn btn-secondary">상세 입력</a>
+        <button type="button" class="btn btn-ghost" id="modal-cancel-btn">취소</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="/projects/chat/js/calendar.js"></script>
+  <script type="module">
+    import '/js/theme.js';
+  </script>
+</body>
+</html>

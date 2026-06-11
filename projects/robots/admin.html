@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>관리 — Soul Fingerprint</title>
+    <link rel="stylesheet" href="/projects/robots/css/style.css">
+</head>
+<body>
+    <header>
+        <h1><a href="/projects/robots/" style="color: inherit; text-decoration: none;">Soul Fingerprint</a></h1>
+        <p class="subtitle">등록 요청 관리 &middot; <a href="/projects/robots/" style="color: var(--accent);">← 검색</a> &middot; <a href="#" id="logoutLink" style="color: var(--text-muted);">로그아웃</a></p>
+    </header>
+
+    <main>
+        <div class="section-nav">
+            <button class="section-btn active" id="sectionRequests" onclick="showSection('requests')">등록 요청</button>
+            <button class="section-btn" id="sectionSites" onclick="showSection('sites')">사이트 관리</button>
+        </div>
+
+        <div id="requestsSection">
+            <div class="admin-stats" id="adminStats"></div>
+
+            <div class="admin-tabs">
+                <button class="tab-btn active" data-status="" onclick="filterByStatus('')">전체</button>
+                <button class="tab-btn" data-status="pending" onclick="filterByStatus('pending')">대기 중</button>
+                <button class="tab-btn" data-status="approved" onclick="filterByStatus('approved')">승인</button>
+                <button class="tab-btn" data-status="rejected" onclick="filterByStatus('rejected')">거절</button>
+            </div>
+
+            <div id="requestList"></div>
+            <div class="pagination" id="pagination"></div>
+        </div>
+
+        <div id="sitesSection" style="display:none;">
+            <div class="site-add-form">
+                <input type="text" id="newDomain" placeholder="도메인 입력 (예: example.com)">
+                <select id="newCategory">
+                    <option value="">카테고리 선택</option>
+                    <option value="search">search</option>
+                    <option value="social">social</option>
+                    <option value="dev">dev</option>
+                    <option value="news">news</option>
+                    <option value="ai">ai</option>
+                    <option value="reference">reference</option>
+                    <option value="shopping">shopping</option>
+                    <option value="cloud">cloud</option>
+                </select>
+                <button onclick="addSite()">추가</button>
+                <span id="siteAddResult" style="margin-left:0.5rem;"></span>
+            </div>
+            <div class="site-search-bar">
+                <input type="text" id="siteSearchInput" placeholder="도메인 검색..." oninput="searchSites()">
+            </div>
+            <div id="siteList"></div>
+            <div class="pagination" id="sitePagination"></div>
+        </div>
+    </main>
+
+    <footer>
+        <p><a href="/projects/robots/" style="color: var(--accent);">← 검색으로 돌아가기</a></p>
+    </footer>
+
+    <script>
+    const API = '/api';
+    let currentStatus = '';
+    let currentPage = 1;
+
+    async function authFetch(url, options = {}) {
+        const res = await fetch(url, options);
+        if (res.status === 401) {
+            window.location.href = '/projects/robots/admin/login';
+            return null;
+        }
+        return res;
+    }
+
+    function formatDate(d) { return d ? new Date(d).toLocaleDateString('ko-KR') : ''; }
+    function escapeHtml(s) { return s ? s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;') : ''; }
+
+    function statusLabel(s) {
+        return { pending: '대기 중', approved: '승인', rejected: '거절' }[s] || s;
+    }
+
+    function statusBadgeClass(s) {
+        return { pending: 'badge-unknown', approved: 'badge-yes', rejected: 'badge-no' }[s] || '';
+    }
+
+    async function loadStats() {
+        try {
+            const responses = await Promise.all([
+                authFetch(`${API}/requests?per_page=1`),
+                authFetch(`${API}/requests?status=pending&per_page=1`),
+                authFetch(`${API}/requests?status=approved&per_page=1`),
+                authFetch(`${API}/requests?status=rejected&per_page=1`)
+            ]);
+            if (responses.some(r => !r)) return;
+            const [all, pending, approved, rejected] = await Promise.all(responses.map(r => r.json()));
+            document.getElementById('adminStats').textContent =
+                `전체: ${all.total}건 \u00b7 대기: ${pending.total}건 \u00b7 승인: ${approved.total}건 \u00b7 거절: ${rejected.total}건`;
+        } catch (err) {
+            document.getElementById('adminStats').textContent = '';
+        }
+    }
+
+    async function loadRequests(status, page) {
+        currentStatus = status;
+        currentPage = page;
+        const params = new URLSearchParams({ page, per_page: 20 });
+        if (status) params.set('status', status);
+
+        try {
+            const res = await authFetch(`${API}/requests?${params}`);
+            if (!res) return;
+            const data = await res.json();
+            renderRequests(data);
+            renderPagination(data);
+        } catch (err) {
+            document.getElementById('requestList').innerHTML =
+                '<p style="color: var(--red);">요청 목록을 불러오는 중 오류가 발생했습니다.</p>';
+        }
+    }
+
+    function renderRequests(data) {
+        const el = document.getElementById('requestList');
+        if (!data.requests || data.requests.length === 0) {
+            el.innerHTML = '<p style="color: var(--text-muted); text-align: center; padding: 2rem;">등록 요청이 없습니다.</p>';
+            return;
+        }
+
+        el.innerHTML = data.requests.map(req => `
+            <div class="request-card">
+                <div class="request-info">
+                    <div class="request-domain">${escapeHtml(req.domain)}</div>
+                    <div class="request-meta">
+                        <span class="badge ${statusBadgeClass(req.status)}">${statusLabel(req.status)}</span>
+                        <span>요청자: ${escapeHtml(req.requested_by || 'anonymous')}</span>
+                        <span>${formatDate(req.created_at)}</span>
+                        ${req.reject_reason ? `<span style="color: var(--red);">사유: ${escapeHtml(req.reject_reason)}</span>` : ''}
+                    </div>
+                </div>
+                ${req.status === 'pending' ? `
+                    <div class="request-actions">
+                        <button class="btn-approve" onclick="approveRequest(${req.id})">승인</button>
+                        <button class="btn-reject" onclick="rejectRequest(${req.id})">거절</button>
+                    </div>
+                ` : ''}
+            </div>
+        `).join('');
+    }
+
+    function renderPagination(data) {
+        const el = document.getElementById('pagination');
+        if (data.pages <= 1) { el.innerHTML = ''; return; }
+
+        let buttons = '';
+        const start = Math.max(1, data.page - 3);
+        const end = Math.min(data.pages, data.page + 3);
+
+        if (data.page > 1) {
+            buttons += `<button onclick="loadRequests('${currentStatus}', ${data.page - 1})">&#8249;</button>`;
+        }
+        for (let i = start; i <= end; i++) {
+            buttons += `<button class="${i === data.page ? 'active' : ''}" onclick="loadRequests('${currentStatus}', ${i})">${i}</button>`;
+        }
+        if (data.page < data.pages) {
+            buttons += `<button onclick="loadRequests('${currentStatus}', ${data.page + 1})">&#8250;</button>`;
+        }
+
+        el.innerHTML = buttons;
+    }
+
+    function filterByStatus(status) {
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.status === status);
+        });
+        loadRequests(status, 1);
+    }
+
+    async function approveRequest(id) {
+        try {
+            const res = await authFetch(`${API}/requests/${id}`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ status: 'approved' })
+            });
+            if (!res) return;
+            if (res.ok) {
+                loadRequests(currentStatus, currentPage);
+                loadStats();
+            } else {
+                const data = await res.json();
+                alert(data.error || '승인 처리 실패');
+            }
+        } catch (err) {
+            alert('서버 연결 오류');
+        }
+    }
+
+    async function rejectRequest(id) {
+        const reason = prompt('거절 사유를 입력하세요:');
+        if (reason === null) return;
+
+        try {
+            const res = await authFetch(`${API}/requests/${id}`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ status: 'rejected', reject_reason: reason })
+            });
+            if (!res) return;
+            if (res.ok) {
+                loadRequests(currentStatus, currentPage);
+                loadStats();
+            } else {
+                const data = await res.json();
+                alert(data.error || '거절 처리 실패');
+            }
+        } catch (err) {
+            alert('서버 연결 오류');
+        }
+    }
+
+    /* ─── Site Management ─── */
+    let siteCurrentPage = 1;
+    let siteCurrentQuery = '';
+
+    function showSection(section) {
+        document.getElementById('requestsSection').style.display = section === 'requests' ? '' : 'none';
+        document.getElementById('sitesSection').style.display = section === 'sites' ? '' : 'none';
+        document.getElementById('sectionRequests').classList.toggle('active', section === 'requests');
+        document.getElementById('sectionSites').classList.toggle('active', section === 'sites');
+        if (section === 'sites') loadSites(siteCurrentQuery, 1);
+    }
+
+    async function loadSites(q, page) {
+        siteCurrentPage = page;
+        siteCurrentQuery = q || '';
+        const params = new URLSearchParams({ page, per_page: 20 });
+        if (q) params.set('q', q);
+        try {
+            const res = await authFetch(`${API}/sites?${params}`);
+            if (!res) return;
+            const data = await res.json();
+            renderSites(data);
+            renderSitePagination(data);
+        } catch (err) {
+            document.getElementById('siteList').innerHTML =
+                '<p style="color: var(--red);">사이트 목록 오류</p>';
+        }
+    }
+
+    function robotsLabel(s) {
+        return { yes: '있음', no: '없음', unknown: '미확인', error: '오류' }[s] || s;
+    }
+
+    function robotsBadgeClass(s) {
+        return { yes: 'badge-yes', no: 'badge-no', unknown: 'badge-unknown', error: 'badge-no' }[s] || 'badge-unknown';
+    }
+
+    function renderSites(data) {
+        const el = document.getElementById('siteList');
+        if (!data.sites || data.sites.length === 0) {
+            el.innerHTML = '<p style="color: var(--text-muted); text-align: center; padding: 2rem;">등록된 사이트가 없습니다.</p>';
+            return;
+        }
+        el.innerHTML = data.sites.map(site => `
+            <div class="site-mgmt-card">
+                <div class="site-mgmt-info">
+                    <div class="site-mgmt-domain">${escapeHtml(site.domain)}</div>
+                    <div class="site-mgmt-meta">
+                        <span class="badge ${robotsBadgeClass(site.has_robots)}">${robotsLabel(site.has_robots)}</span>
+                        ${site.category ? `<span>${escapeHtml(site.category)}</span>` : ''}
+                        ${site.last_checked ? `<span>확인: ${formatDate(site.last_checked)}</span>` : ''}
+                    </div>
+                </div>
+                <div class="site-mgmt-actions">
+                    <button class="btn-crawl" onclick="crawlSite(${site.id}, this)">크롤</button>
+                    <button class="btn-edit" onclick="editSite(${site.id}, '${escapeHtml(site.category || '')}')">수정</button>
+                    <button class="btn-delete" onclick="deleteSite(${site.id}, '${escapeHtml(site.domain)}')">삭제</button>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    function renderSitePagination(data) {
+        const el = document.getElementById('sitePagination');
+        if (data.pages <= 1) { el.innerHTML = ''; return; }
+        let buttons = '';
+        const start = Math.max(1, data.page - 3);
+        const end = Math.min(data.pages, data.page + 3);
+        if (data.page > 1) buttons += `<button onclick="loadSites(siteCurrentQuery, ${data.page - 1})">&#8249;</button>`;
+        for (let i = start; i <= end; i++) {
+            buttons += `<button class="${i === data.page ? 'active' : ''}" onclick="loadSites(siteCurrentQuery, ${i})">${i}</button>`;
+        }
+        if (data.page < data.pages) buttons += `<button onclick="loadSites(siteCurrentQuery, ${data.page + 1})">&#8250;</button>`;
+        el.innerHTML = buttons;
+    }
+
+    function searchSites() {
+        const q = document.getElementById('siteSearchInput').value.trim();
+        loadSites(q, 1);
+    }
+
+    async function addSite() {
+        const domain = document.getElementById('newDomain').value.trim();
+        const category = document.getElementById('newCategory').value;
+        const resultEl = document.getElementById('siteAddResult');
+        if (!domain) { resultEl.textContent = '도메인을 입력하세요.'; resultEl.style.color = 'var(--red)'; return; }
+        try {
+            const res = await authFetch(`${API}/sites`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ domain, category: category || undefined })
+            });
+            if (!res) return;
+            const data = await res.json();
+            if (res.ok) {
+                resultEl.textContent = `${data.site.domain} 추가됨`;
+                resultEl.style.color = 'var(--green)';
+                document.getElementById('newDomain').value = '';
+                document.getElementById('newCategory').value = '';
+                loadSites(siteCurrentQuery, siteCurrentPage);
+            } else {
+                resultEl.textContent = data.error || '추가 실패';
+                resultEl.style.color = 'var(--red)';
+            }
+        } catch (err) {
+            resultEl.textContent = '서버 연결 오류';
+            resultEl.style.color = 'var(--red)';
+        }
+    }
+
+    async function crawlSite(id, btn) {
+        btn.disabled = true;
+        btn.textContent = '...';
+        try {
+            const res = await authFetch(`${API}/sites/${id}/crawl`, { method: 'POST' });
+            if (!res) { btn.disabled = false; btn.textContent = '크롤'; return; }
+            const data = await res.json();
+            if (data.success) {
+                btn.textContent = data.site.has_robots === 'yes' ? '✓' : '✗';
+            } else {
+                btn.textContent = '오류';
+            }
+            loadSites(siteCurrentQuery, siteCurrentPage);
+        } catch (err) {
+            btn.textContent = '오류';
+        }
+        setTimeout(() => { btn.disabled = false; btn.textContent = '크롤'; }, 2000);
+    }
+
+    async function editSite(id, currentCategory) {
+        const newCategory = prompt('새 카테고리를 입력하세요:', currentCategory);
+        if (newCategory === null) return;
+        try {
+            const res = await authFetch(`${API}/sites/${id}`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ category: newCategory })
+            });
+            if (!res) return;
+            if (res.ok) loadSites(siteCurrentQuery, siteCurrentPage);
+        } catch (err) {
+            alert('서버 연결 오류');
+        }
+    }
+
+    async function deleteSite(id, domain) {
+        if (!confirm(`'${domain}' 사이트를 삭제하시겠습니까?`)) return;
+        try {
+            const res = await authFetch(`${API}/sites/${id}`, { method: 'DELETE' });
+            if (!res) return;
+            if (res.ok) loadSites(siteCurrentQuery, siteCurrentPage);
+        } catch (err) {
+            alert('서버 연결 오류');
+        }
+    }
+
+    document.getElementById('logoutLink').addEventListener('click', async (e) => {
+        e.preventDefault();
+        await fetch(`${API}/admin/logout`, { method: 'POST' });
+        window.location.href = '/projects/robots/admin/login';
+    });
+
+    loadStats();
+    loadRequests('', 1);
+    </script>
+</body>
+</html>

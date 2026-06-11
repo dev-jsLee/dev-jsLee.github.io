@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CalDAVchat — 프로필</title>
+  <link rel="icon" href="/projects/chat/assets/favicon.ico">
+  <link rel="stylesheet" href="/projects/chat/css/common.css">
+  <link rel="stylesheet" href="/projects/chat/css/profile.css">
+</head>
+<body class="profile-page">
+  <nav class="profile-nav">
+    <a href="/projects/chat/calendar.html" class="profile-nav-logo">📅 CalDAVchat</a>
+    <a href="/projects/chat/calendar.html" class="profile-nav-back">← 돌아가기</a>
+  </nav>
+
+  <main class="profile-main">
+    <div class="profile-card">
+      <!-- Loading -->
+      <div class="profile-loading" id="profile-loading">불러오는 중...</div>
+
+      <!-- Profile Content (hidden until loaded) -->
+      <div id="profile-content" style="display:none">
+        <!-- Avatar -->
+        <div class="profile-avatar-section">
+          <div class="profile-avatar-large" id="profile-avatar"></div>
+        </div>
+
+        <!-- Email (read-only) -->
+        <div class="profile-field">
+          <label for="profile-email">이메일</label>
+          <input type="email" id="profile-email" readonly>
+        </div>
+
+        <!-- Display Name -->
+        <div class="profile-field">
+          <label for="profile-display-name">표시 이름</label>
+          <input type="text" id="profile-display-name" placeholder="표시 이름을 입력하세요" maxlength="50">
+        </div>
+
+        <!-- Avatar URL -->
+        <div class="profile-field">
+          <label for="profile-avatar-url">아바타 URL</label>
+          <input type="url" id="profile-avatar-url" placeholder="https://...">
+        </div>
+
+        <!-- Messages -->
+        <div class="profile-message profile-message-success" id="save-success" hidden>프로필이 저장되었습니다.</div>
+        <div class="profile-message profile-message-error" id="save-error" hidden></div>
+
+        <!-- Actions -->
+        <div class="profile-actions">
+          <button type="button" class="profile-save-btn" id="save-profile-btn">저장</button>
+          <hr class="profile-divider">
+          <button type="button" class="profile-logout-btn" id="logout-btn">로그아웃</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script type="module" src="/projects/chat/js/profile.js"></script>
+  <script type="module">
+    import '/js/theme.js';
+  </script>
+</body>
+</html>

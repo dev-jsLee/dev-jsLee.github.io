@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CalDAVchat — 일정 생성</title>
+  <link rel="icon" href="/projects/chat/assets/favicon.ico">
+  <link rel="stylesheet" href="/projects/chat/css/common.css">
+  <link rel="stylesheet" href="/projects/chat/css/event-create.css">
+</head>
+<body class="event-create-page">
+  <header class="page-header">
+    <button type="button" class="btn btn-ghost back-btn" onclick="history.back()">← 뒤로</button>
+    <h1 class="page-title" id="page-title">일정 생성</h1>
+    <div class="header-spacer"></div>
+  </header>
+
+  <main class="page-container">
+    <form class="event-form" id="event-form" novalidate>
+      <div class="form-group">
+        <label class="form-label" for="title">제목 <span class="required">*</span></label>
+        <input type="text" class="input input-title" id="title" name="title"
+               placeholder="일정 제목을 입력하세요" maxlength="200" required autocomplete="off">
+        <div class="form-field-footer">
+          <span class="form-error" id="title-error" role="alert"></span>
+          <span class="form-char-count" id="title-count">0 / 200</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="description">설명</label>
+        <textarea class="textarea" id="description" name="description"
+                  placeholder="일정 설명을 입력하세요 (선택)" maxlength="2000" rows="4"></textarea>
+        <div class="form-field-footer">
+          <span class="form-hint">선택 사항</span>
+          <span class="form-char-count" id="desc-count">0 / 2000</span>
+        </div>
+      </div>
+
+      <div class="form-divider"></div>
+
+      <div class="form-group">
+        <label class="form-check">
+          <input type="checkbox" id="no-time" name="no-time">
+          <span class="form-check-indicator"></span>
+          <span class="form-check-label">시간 미정</span>
+        </label>
+        <span class="form-hint">나중에 채팅으로 시간을 조율할 수 있어요</span>
+      </div>
+
+      <div class="time-fields-wrapper" id="time-fields">
+        <div class="time-fields-row">
+          <div class="form-group">
+            <label class="form-label" for="start-time">시작 시간</label>
+            <input type="datetime-local" class="input" id="start-time" name="start-time">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="end-time">종료 시간</label>
+            <input type="datetime-local" class="input" id="end-time" name="end-time">
+          </div>
+        </div>
+        <span class="form-error" id="time-error" role="alert"></span>
+      </div>
+
+      <div class="form-divider"></div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary btn-lg submit-btn" id="submit-btn">생성</button>
+        <button type="button" class="btn btn-ghost btn-lg" onclick="history.back()">취소</button>
+      </div>
+    </form>
+  </main>
+
+  <script type="module" src="/projects/chat/js/event-create.js"></script>
+  <script type="module">
+    import '/js/theme.js';
+  </script>
+</body>
+</html>

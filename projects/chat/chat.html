@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CalDAVchat — 채팅</title>
+  <link rel="icon" href="/projects/chat/assets/favicon.ico">
+  <link rel="stylesheet" href="/projects/chat/css/common.css">
+  <link rel="stylesheet" href="/projects/chat/css/chat.css">
+</head>
+<body class="chat-page">
+  <header class="chat-header">
+    <a href="/projects/chat/event-detail.html" class="btn btn-ghost back-btn" id="back-link">← 뒤로</a>
+    <div class="chat-header-info">
+      <h1 class="chat-room-title" id="chat-room-title">채팅방</h1>
+      <span class="badge badge-gray" id="participant-count"></span>
+    </div>
+    <div class="chat-header-actions">
+      <button type="button" class="btn btn-ghost more-btn" id="more-btn" aria-label="더보기">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+          <circle cx="12" cy="5" r="2"/>
+          <circle cx="12" cy="12" r="2"/>
+          <circle cx="12" cy="19" r="2"/>
+        </svg>
+      </button>
+      <div class="more-menu" id="more-menu">
+        <button type="button" class="more-menu-item" id="export-btn">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          내보내기
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="messages-container" id="messages-container" aria-live="polite">
+    <div class="empty-state">
+      <div class="empty-state-icon">💬</div>
+      <p class="empty-state-title">첫 메시지를 보내보세요</p>
+    </div>
+  </main>
+
+  <footer class="chat-input-area">
+    <textarea
+      class="chat-input"
+      id="chat-input"
+      placeholder="메시지를 입력하세요..."
+      maxlength="2000"
+      rows="1"
+      aria-label="메시지 입력"
+    ></textarea>
+    <button type="button" class="chat-send-btn" id="chat-send-btn" aria-label="전송">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <line x1="22" y1="2" x2="11" y2="13"/>
+        <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+      </svg>
+    </button>
+  </footer>
+
+  <script type="module" src="/projects/chat/js/chat.js"></script>
+  <script type="module">
+    import '/js/theme.js';
+  </script>
+</body>
+</html>

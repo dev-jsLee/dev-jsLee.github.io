@@ -4,6 +4,7 @@
   "type": "module",
   "scripts": {
     "admin": "node tools/admin/server.mjs",
-    "serve": "python -m http.server 8765"
+    "serve": "python -m http.server 8765",
+    "sync-demos": "node tools/sync-demos.mjs"
   }
 }

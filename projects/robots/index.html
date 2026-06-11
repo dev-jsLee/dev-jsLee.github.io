@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soul Fingerprint — robots.txt Directory</title>
+    <link rel="stylesheet" href="/projects/robots/css/style.css">
+</head>
+<body>
+    <header>
+        <h1>Soul Fingerprint</h1>
+        <p class="subtitle">robots.txt Directory for Agents & Humans</p>
+    </header>
+
+    <main>
+        <!-- Search Section -->
+        <section class="search-section">
+            <div class="search-box">
+                <input 
+                    type="text" 
+                    id="searchInput" 
+                    placeholder="도메인 검색 (예: github.com)" 
+                    autocomplete="off"
+                >
+                <button id="searchBtn">검색</button>
+            </div>
+            <div class="stats" id="stats"></div>
+        </section>
+
+        <!-- Results Section -->
+        <section class="results-section">
+            <div id="results"></div>
+            <div class="pagination" id="pagination"></div>
+        </section>
+
+        <!-- Register Section -->
+        <section class="register-section">
+            <h2>사이트 등록 요청</h2>
+            <p>목록에 없는 사이트가 있나요? 등록을 요청하세요.</p>
+            <div class="register-form">
+                <input type="text" id="regDomain" placeholder="도메인 (예: example.com)">
+                <input type="text" id="regRobotsUrl" placeholder="robots.txt URL (선택)">
+                <input type="text" id="regRequestedBy" placeholder="요청자 (선택)">
+                <button id="regBtn">등록 요청</button>
+            </div>
+            <div id="regResult"></div>
+        </section>
+    </main>
+
+    <!-- Modal for site detail -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal" id="modal">
+            <div class="modal-header">
+                <h2 id="modalTitle"></h2>
+                <div class="modal-actions">
+                    <button class="btn-icon" id="openNewTab" title="새 탭으로 열기">↗</button>
+                    <button class="btn-icon" id="closeModal" title="닫기">✕</button>
+                </div>
+            </div>
+            <div class="modal-body" id="modalBody"></div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Soul Fingerprint — 에이전트가 웹을 탐색하기 전에 확인하는 디렉토리</p>
+    </footer>
+
+    <script src="/projects/robots/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CalDAVchat — 일정 상세</title>
+  <link rel="icon" href="/projects/chat/assets/favicon.ico">
+  <link rel="stylesheet" href="/projects/chat/css/common.css">
+  <link rel="stylesheet" href="/projects/chat/css/event-detail.css">
+</head>
+<body class="event-detail-page">
+  <header class="page-header">
+    <button type="button" class="btn btn-ghost back-btn" onclick="history.back()">← 뒤로</button>
+    <h1 class="page-title">일정 상세</h1>
+    <a href="#" class="btn btn-secondary btn-sm" id="edit-btn">수정</a>
+  </header>
+
+  <main class="page-container" id="event-detail-content">
+    <div class="empty-state">
+      <div class="empty-state-icon">📋</div>
+      <p class="empty-state-title">일정을 불러오는 중...</p>
+    </div>
+  </main>
+
+  <script type="module" src="/projects/chat/js/event-detail.js"></script>
+  <script type="module">
+    import '/js/theme.js';
+  </script>
+</body>
+</html>

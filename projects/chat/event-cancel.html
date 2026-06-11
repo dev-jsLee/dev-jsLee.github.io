@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CalDAVchat — 일정 취소</title>
+  <link rel="icon" href="/projects/chat/assets/favicon.ico">
+  <link rel="stylesheet" href="/projects/chat/css/common.css">
+  <link rel="stylesheet" href="/projects/chat/css/event-cancel.css">
+</head>
+<body class="event-cancel-page">
+  <header class="page-header">
+    <button type="button" class="btn btn-ghost back-btn" onclick="history.back()">← 뒤로</button>
+    <h1 class="page-title">일정 취소</h1>
+    <div class="header-spacer"></div>
+  </header>
+
+  <main class="page-container" id="cancel-content">
+    <!-- Step Indicator -->
+    <div class="step-indicator" id="step-indicator" role="list" aria-label="취소 진행 단계">
+      <div class="step active" data-step="1" role="listitem">
+        <div class="step-circle">1</div>
+        <div class="step-label">취소 선언</div>
+      </div>
+      <div class="step-line" data-after="1"></div>
+      <div class="step" data-step="2" role="listitem">
+        <div class="step-circle">2</div>
+        <div class="step-label">참여자 동의</div>
+      </div>
+      <div class="step-line" data-after="2"></div>
+      <div class="step" data-step="3" role="listitem">
+        <div class="step-circle">3</div>
+        <div class="step-label">취소 확정</div>
+      </div>
+    </div>
+
+    <!-- Step Content (rendered by JS) -->
+    <div id="step-content"></div>
+  </main>
+
+  <script type="module" src="/projects/chat/js/event-cancel.js"></script>
+  <script type="module">
+    import '/js/theme.js';
+  </script>
+</body>
+</html>

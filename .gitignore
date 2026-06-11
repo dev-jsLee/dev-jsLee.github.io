@@ -303,5 +303,7 @@ yarn-error.log*
 ### Project local ###
 # Reference design material (not part of the site)
 _ref/
+# Cloned project source repos — pulled for reference, screens vendored into projects/ via tools/sync-demos.mjs
+_src/
 # Archives
 *.zip

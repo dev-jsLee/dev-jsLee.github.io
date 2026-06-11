@@ -1,0 +1,390 @@
+/* ============================================================================
+   CalDAVchat — Event Cancel Flow Styles
+   ============================================================================ */
+
+/* ── Header ─────────────────────────────────────────────────────────────── */
+
+.event-cancel-page .page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-surface);
+  position: sticky;
+  top: 0;
+  z-index: var(--z-dropdown);
+}
+
+.event-cancel-page .page-title {
+  font-size: 1.0625rem;
+  font-weight: 600;
+}
+
+.event-cancel-page .back-btn {
+  padding: var(--spacing-xs) var(--spacing-sm);
+  font-size: 0.9375rem;
+}
+
+.event-cancel-page .header-spacer {
+  width: 60px;
+}
+
+/* ── Content Layout ─────────────────────────────────────────────────────── */
+
+.event-cancel-page .page-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  padding-top: var(--spacing-lg);
+  padding-bottom: var(--spacing-2xl);
+  animation: cancel-fade-in 0.3s ease;
+}
+
+@keyframes cancel-fade-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Step Indicator ─────────────────────────────────────────────────────── */
+
+.step-indicator {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: var(--spacing-lg) var(--spacing-md);
+  gap: 0;
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-xs);
+  flex-shrink: 0;
+}
+
+.step-circle {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-full);
+  background: var(--color-bg-tertiary);
+  color: var(--color-text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.9375rem;
+  border: 2px solid var(--color-border);
+  transition: background-color var(--transition-base),
+              border-color var(--transition-base),
+              color var(--transition-base),
+              box-shadow var(--transition-base);
+}
+
+.step.active .step-circle {
+  background: var(--color-primary);
+  color: var(--color-text-inverse);
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15);
+}
+
+.step.completed .step-circle {
+  background: var(--color-success);
+  color: var(--color-text-inverse);
+  border-color: var(--color-success);
+}
+
+.step-label {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+  transition: color var(--transition-base), font-weight var(--transition-base);
+}
+
+.step.active .step-label {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.step.completed .step-label {
+  color: var(--color-success);
+  font-weight: 500;
+}
+
+.step-line {
+  flex: 1;
+  height: 2px;
+  background: var(--color-border);
+  min-width: 32px;
+  max-width: 80px;
+  margin: 0 var(--spacing-xs);
+  margin-top: 17px;
+  transition: background-color var(--transition-base);
+}
+
+.step-line.completed {
+  background: var(--color-success);
+}
+
+/* ── Step Views (shared) ────────────────────────────────────────────────── */
+
+.step-view {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  animation: step-enter 0.25s ease;
+}
+
+@keyframes step-enter {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Event Summary Card ─────────────────────────────────────────────────── */
+
+.cancel-event-summary {
+  margin-bottom: 0;
+}
+
+.cancel-event-summary .summary-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: var(--spacing-xs);
+  color: var(--color-text-primary);
+}
+
+.cancel-event-summary .summary-datetime {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+}
+
+.cancel-event-summary .summary-datetime-icon {
+  flex-shrink: 0;
+}
+
+.cancel-event-summary .summary-description {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  margin-top: var(--spacing-xs);
+  line-height: 1.5;
+}
+
+/* ── Step 1: Cancel Declare ─────────────────────────────────────────────── */
+
+.cancel-confirm-msg {
+  text-align: center;
+  padding: var(--spacing-lg);
+  background: var(--color-bg-secondary);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+}
+
+.cancel-confirm-msg .confirm-question {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-xs);
+}
+
+.cancel-confirm-msg .confirm-notice {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+}
+
+.step-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+/* ── Step 2: Vote Progress ──────────────────────────────────────────────── */
+
+.vote-progress {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.vote-progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9375rem;
+}
+
+.vote-progress-label {
+  color: var(--color-text-secondary);
+  font-weight: 500;
+}
+
+.vote-count {
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+.progress-bar {
+  height: 8px;
+  background: var(--color-bg-tertiary);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--color-primary);
+  border-radius: var(--radius-full);
+  transition: width 0.4s ease;
+  min-width: 0;
+}
+
+/* ── Vote List ──────────────────────────────────────────────────────────── */
+
+.vote-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.vote-item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm) 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.vote-item:last-child {
+  border-bottom: none;
+}
+
+.vote-item .avatar {
+  flex-shrink: 0;
+}
+
+.vote-email {
+  flex: 1;
+  font-size: 0.9375rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--color-text-primary);
+}
+
+.vote-status {
+  font-size: 0.875rem;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+.vote-status.voted {
+  color: var(--color-success);
+}
+
+.vote-status.pending {
+  color: var(--color-text-muted);
+}
+
+/* ── Step 3: Complete ───────────────────────────────────────────────────── */
+
+.step-complete {
+  text-align: center;
+  padding: var(--spacing-2xl) var(--spacing-md);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-md);
+  animation: complete-pop 0.4s ease;
+}
+
+@keyframes complete-pop {
+  0%   { opacity: 0; transform: scale(0.9); }
+  60%  { transform: scale(1.02); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+.complete-icon {
+  font-size: 64px;
+  line-height: 1;
+}
+
+.step-complete .complete-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+.step-complete .complete-subtitle {
+  color: var(--color-text-muted);
+  font-size: 0.9375rem;
+}
+
+/* ── Dark Mode Adjustments ──────────────────────────────────────────────── */
+
+[data-theme="dark"] .step.active .step-circle {
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.25);
+}
+
+[data-theme="dark"] .cancel-confirm-msg {
+  border-color: var(--color-border);
+}
+
+/* ── Responsive ─────────────────────────────────────────────────────────── */
+
+@media (max-width: 767px) {
+  .event-cancel-page .page-header {
+    padding: var(--spacing-sm);
+  }
+
+  .step-indicator {
+    padding: var(--spacing-md) var(--spacing-sm);
+  }
+
+  .step-circle {
+    width: 32px;
+    height: 32px;
+    font-size: 0.8125rem;
+  }
+
+  .step-line {
+    min-width: 24px;
+    margin-top: 15px;
+  }
+
+  .step-label {
+    font-size: 0.6875rem;
+  }
+
+  .cancel-confirm-msg {
+    padding: var(--spacing-md);
+  }
+
+  .complete-icon {
+    font-size: 48px;
+  }
+
+  .step-complete .complete-title {
+    font-size: 1.25rem;
+  }
+
+  .event-cancel-page .header-spacer {
+    width: 44px;
+  }
+}
+
+@media (min-width: 768px) {
+  .event-cancel-page .page-container {
+    max-width: 640px;
+    margin: 0 auto;
+    padding-top: var(--spacing-xl);
+  }
+
+  .step-line {
+    min-width: 60px;
+  }
+}

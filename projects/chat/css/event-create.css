@@ -1,0 +1,246 @@
+.event-create-page .page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-surface);
+  position: sticky;
+  top: 0;
+  z-index: var(--z-dropdown);
+}
+
+.event-create-page .page-title {
+  font-size: 1.0625rem;
+  font-weight: 600;
+}
+
+.event-create-page .back-btn {
+  padding: var(--spacing-xs) var(--spacing-sm);
+  font-size: 0.9375rem;
+}
+
+.header-spacer {
+  width: 60px;
+}
+
+.event-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+  padding: var(--spacing-xl) 0;
+  animation: form-fade-in 0.35s ease;
+}
+
+@keyframes form-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.form-label {
+  font-weight: 500;
+  font-size: 0.9375rem;
+  color: var(--color-text-primary);
+}
+
+.required {
+  color: var(--color-danger);
+  margin-left: 2px;
+}
+
+.input-title {
+  font-size: 1.125rem;
+  padding: var(--spacing-md);
+  font-weight: 500;
+}
+
+.input-title::placeholder {
+  font-weight: 400;
+}
+
+.form-field-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 1.25em;
+}
+
+.form-char-count {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  margin-left: auto;
+  font-variant-numeric: tabular-nums;
+}
+
+.form-error {
+  font-size: 0.8125rem;
+  color: var(--color-danger);
+  min-height: 1.2em;
+  transition: opacity var(--transition-fast);
+}
+
+.form-error:empty {
+  opacity: 0;
+}
+
+.form-hint {
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+}
+
+.input.has-error,
+.textarea.has-error {
+  border-color: var(--color-danger);
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.15);
+}
+
+.form-divider {
+  height: 1px;
+  background: var(--color-border);
+  margin: var(--spacing-xs) 0;
+}
+
+.form-check {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  cursor: pointer;
+  font-size: 0.9375rem;
+  user-select: none;
+  width: fit-content;
+}
+
+.form-check input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.form-check-indicator {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+  flex-shrink: 0;
+  background: var(--color-surface);
+}
+
+.form-check input[type="checkbox"]:checked + .form-check-indicator {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.form-check input[type="checkbox"]:checked + .form-check-indicator::after {
+  content: '';
+  width: 5px;
+  height: 9px;
+  border: 2px solid var(--color-text-inverse);
+  border-top: none;
+  border-left: none;
+  transform: rotate(45deg) translateY(-1px);
+}
+
+.form-check input[type="checkbox"]:focus-visible + .form-check-indicator {
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+}
+
+.form-check-label {
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+.time-fields-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  transition: opacity var(--transition-base);
+}
+
+.time-fields-wrapper.disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.time-fields-row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.time-fields-wrapper .input {
+  color-scheme: light;
+}
+
+[data-theme="dark"] .time-fields-wrapper .input {
+  color-scheme: dark;
+}
+
+.form-actions {
+  display: flex;
+  gap: var(--spacing-sm);
+  padding-top: var(--spacing-md);
+}
+
+.submit-btn {
+  flex: 1;
+  justify-content: center;
+  font-size: 1rem;
+  padding: 14px var(--spacing-xl);
+}
+
+@media (min-width: 768px) {
+  .event-form {
+    max-width: 560px;
+    margin: 0 auto;
+    padding: var(--spacing-2xl) 0;
+  }
+
+  .time-fields-row {
+    flex-direction: row;
+    gap: var(--spacing-md);
+  }
+
+  .time-fields-row > .form-group {
+    flex: 1;
+  }
+
+  .form-actions {
+    justify-content: flex-start;
+  }
+
+  .submit-btn {
+    flex: none;
+    min-width: 160px;
+  }
+}
+
+@media (max-width: 767px) {
+  .event-create-page .page-header {
+    padding: var(--spacing-sm);
+  }
+
+  .event-form {
+    padding: var(--spacing-lg) 0;
+  }
+
+  .header-spacer {
+    width: 48px;
+  }
+}

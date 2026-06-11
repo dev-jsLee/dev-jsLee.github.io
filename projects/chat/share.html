@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CalDAVchat — 공유된 일정</title>
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="CalDAVchat — 공유된 일정">
+  <meta property="og:description" content="CalDAVchat에서 공유된 일정입니다. 참여하려면 링크를 클릭하세요.">
+  <meta property="og:image" content="/assets/og-image.png">
+  <meta property="og:url" content="">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="CalDAVchat — 공유된 일정">
+  <meta name="twitter:description" content="CalDAVchat에서 공유된 일정입니다. 참여하려면 링크를 클릭하세요.">
+  <link rel="icon" href="/projects/chat/assets/favicon.ico">
+  <link rel="stylesheet" href="/projects/chat/css/common.css">
+  <link rel="stylesheet" href="/projects/chat/css/share.css">
+</head>
+<body class="share-page">
+  <header class="share-header">
+    <div class="share-header-left">
+      <div class="share-logo">📅 CalDAVchat</div>
+      <span class="share-header-divider"></span>
+      <h1 class="share-header-title">공유된 일정</h1>
+    </div>
+    <button type="button" class="btn btn-ghost nav-icon-btn" id="theme-toggle-btn" title="테마 전환" aria-label="테마 전환">🌙</button>
+  </header>
+
+  <main class="share-main" id="share-content">
+    <div class="empty-state">
+      <div class="empty-state-icon">🔗</div>
+      <p class="empty-state-title">일정을 불러오는 중...</p>
+    </div>
+  </main>
+
+  <footer class="share-footer">CalDAVchat — 일정을 함께</footer>
+
+  <script type="module" src="/projects/chat/js/share.js"></script>
+  <script type="module">
+    import '/js/theme.js';
+  </script>
+</body>
+</html>
