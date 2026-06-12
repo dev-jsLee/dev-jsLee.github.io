@@ -277,14 +277,78 @@ section h2::before {
   text-wrap: pretty;
 }
 
-/* tech stack chips (mono) */
-.hero-stack {
+/* 포지션 탭(가로) + 호버 시 기술 펼침 패널 */
+.hero-roles {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
+  flex-direction: column;
+  gap: 0.7rem;
   margin-bottom: 2.5rem;
 }
 
+.role-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.role-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  padding: 0.4rem 0.85rem;
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  background: var(--bg-elev);
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s, background 0.2s, transform 0.18s;
+}
+
+.role-tab .icon {
+  width: 0.95rem;
+  height: 0.95rem;
+}
+
+.role-tab:hover {
+  transform: translateY(-1px);
+}
+
+.role-tab:hover,
+.role-tab.is-active {
+  color: var(--accent);
+  border-color: var(--accent-line);
+  background: var(--accent-dim);
+}
+
+.role-tab:focus-visible {
+  outline: 2px solid var(--accent-line);
+  outline-offset: 2px;
+}
+
+.role-panel {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-inset);
+  opacity: 0;
+  transition: opacity 0.18s ease;
+}
+
+.role-panel.is-shown {
+  opacity: 1;
+}
+
+.role-panel:empty {
+  display: none;
+}
+
+/* tech stack chips (mono) */
 .stack-chip {
   font-family: var(--font-mono);
   font-size: 0.78rem;
@@ -821,12 +885,12 @@ footer a:hover {
 /* ============================================================
    COLOR POINTS — rotate accents to break the monotone
    ============================================================ */
-/* hero stack chips: each hovers to its own hue */
-.hero-stack .stack-chip { --chip: var(--c-green); }
-.hero-stack .stack-chip:nth-child(5n+2) { --chip: var(--c-sky); }
-.hero-stack .stack-chip:nth-child(5n+3) { --chip: var(--c-violet); }
-.hero-stack .stack-chip:nth-child(5n+4) { --chip: var(--c-amber); }
-.hero-stack .stack-chip:nth-child(5n+5) { --chip: var(--c-coral); }
+/* role panel tech chips: each hovers to its own hue */
+.role-panel .stack-chip { --chip: var(--c-green); }
+.role-panel .stack-chip:nth-child(5n+2) { --chip: var(--c-sky); }
+.role-panel .stack-chip:nth-child(5n+3) { --chip: var(--c-violet); }
+.role-panel .stack-chip:nth-child(5n+4) { --chip: var(--c-amber); }
+.role-panel .stack-chip:nth-child(5n+5) { --chip: var(--c-coral); }
 
 .stack-chip:hover {
   color: var(--chip);

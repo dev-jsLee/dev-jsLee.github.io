@@ -71,19 +71,8 @@ function renderHero(site) {
   setText('[data-hero="developer"]', stripBrackets(site.developer ?? ''));
   setText('[data-hero="tagline"]', stripBrackets(site.tagline ?? ''));
 
-  // tech stack chips
-  const stackHost = document.querySelector('[data-hero="stack"]');
-  if (stackHost) {
-    stackHost.innerHTML = '';
-    const stack = Array.isArray(site.stack) ? site.stack : [];
-    for (const item of stack) {
-      const chip = document.createElement('span');
-      chip.className = 'stack-chip';
-      chip.textContent = item;
-      stackHost.appendChild(chip);
-    }
-    stackHost.hidden = stack.length === 0;
-  }
+  // 포지션 탭 + 호버 시 관련 기술 펼침
+  renderRoles(site);
 
   const linksHost = document.querySelector('[data-hero="links"]');
   if (linksHost) {
@@ -105,6 +94,108 @@ function renderHero(site) {
       linksHost.appendChild(a);
     }
   }
+}
+
+// 포지션↔기술을 이분 그래프(nodes+links)로 모델링하고, 포지션별 인접 기술을 뽑아낸다.
+// → 다대다(기술 하나가 여러 포지션에 연결) 표현 가능. 같은 데이터로 추후 작대기표 시각화도 가능.
+function rolesFromSite(site) {
+  const g = site.skillGraph;
+  if (g && Array.isArray(g.nodes) && Array.isArray(g.links)) {
+    const byId = new Map(g.nodes.map((n) => [n.id, n]));
+    const positions = g.nodes.filter((n) => n.type === 'position');
+    return positions.map((p) => {
+      const tech = [];
+      for (const e of g.links) {
+        // 방향 무관하게 이 포지션에 인접한 노드를 모은다
+        const otherId = e.source === p.id ? e.target : e.target === p.id ? e.source : null;
+        if (otherId == null) continue;
+        const node = byId.get(otherId);
+        tech.push(node ? node.label ?? otherId : otherId);
+      }
+      return { position: p.label ?? p.id, icon: p.icon, tech };
+    });
+  }
+  // 레거시 roles 폴백
+  if (Array.isArray(site.roles)) return site.roles.filter((r) => r && r.position);
+  return [];
+}
+
+// 포지션 탭(가로) + 공용 패널: 탭을 호버/포커스/클릭하면 그 포지션의 기술이 아래로 펼쳐진다.
+function renderRoles(site) {
+  const host = document.querySelector('[data-hero="roles"]');
+  if (!host) return;
+  host.innerHTML = '';
+
+  const roles = rolesFromSite(site);
+  if (roles.length === 0) {
+    // 그래프·roles 모두 없으면 레거시 평칩 스택으로 폴백
+    const stack = Array.isArray(site.stack) ? site.stack : [];
+    for (const item of stack) {
+      const chip = document.createElement('span');
+      chip.className = 'stack-chip';
+      chip.textContent = item;
+      host.appendChild(chip);
+    }
+    host.hidden = stack.length === 0;
+    return;
+  }
+  host.hidden = false;
+
+  const tabs = document.createElement('div');
+  tabs.className = 'role-tabs';
+  tabs.setAttribute('role', 'tablist');
+
+  const panel = document.createElement('div');
+  panel.className = 'role-panel';
+  panel.setAttribute('role', 'tabpanel');
+
+  const tabEls = [];
+  let active = -1;
+
+  function setActive(i) {
+    if (i === active) return;
+    active = i;
+    tabEls.forEach((t, idx) => {
+      const on = idx === i;
+      t.classList.toggle('is-active', on);
+      t.setAttribute('aria-selected', String(on));
+      t.tabIndex = on ? 0 : -1;
+    });
+    const tech = Array.isArray(roles[i].tech) ? roles[i].tech : [];
+    panel.innerHTML = '';
+    for (const item of tech) {
+      const chip = document.createElement('span');
+      chip.className = 'stack-chip';
+      chip.textContent = item;
+      panel.appendChild(chip);
+    }
+    // 전환 페이드: 다시 그린 뒤 다음 프레임에 보이게
+    panel.classList.remove('is-shown');
+    requestAnimationFrame(() => panel.classList.add('is-shown'));
+  }
+
+  roles.forEach((role, i) => {
+    const tab = document.createElement('button');
+    tab.type = 'button';
+    tab.className = 'role-tab';
+    tab.setAttribute('role', 'tab');
+    if (role.icon) {
+      const icon = document.createElement('i');
+      icon.setAttribute('data-lucide', role.icon);
+      icon.className = 'icon';
+      tab.appendChild(icon);
+    }
+    tab.appendChild(document.createTextNode(role.position));
+    tab.addEventListener('mouseenter', () => setActive(i));
+    tab.addEventListener('focus', () => setActive(i));
+    tab.addEventListener('click', () => setActive(i));
+    tabEls.push(tab);
+    tabs.appendChild(tab);
+  });
+
+  host.appendChild(tabs);
+  host.appendChild(panel);
+  setActive(0); // 기본은 첫 포지션 펼침
 }
 
 function renderAbout(site) {

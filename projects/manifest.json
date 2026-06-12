@@ -3,7 +3,65 @@
   "site": {
     "developer": "[이준상]",
     "tagline": "[AI를 적극 활용하는 올라운더 개발자]",
-    "stack": ["HTML / CSS", "Vanilla JS", "Python", "Node.js", "GCP", "AI / LLM"],
+    "skillGraph": {
+      "nodes": [
+        { "id": "frontend", "label": "Frontend", "type": "position", "icon": "layout-template" },
+        { "id": "backend", "label": "Backend", "type": "position", "icon": "server" },
+        { "id": "data", "label": "Data / DB", "type": "position", "icon": "database" },
+        { "id": "cloud", "label": "Cloud / Infra", "type": "position", "icon": "cloud" },
+        { "id": "ai", "label": "AI / Agent", "type": "position", "icon": "bot" },
+
+        { "id": "html", "label": "HTML / CSS", "type": "tech" },
+        { "id": "js", "label": "JavaScript", "type": "tech" },
+        { "id": "vanilla", "label": "Vanilla JS", "type": "tech" },
+        { "id": "pdfjs", "label": "PDF.js", "type": "tech" },
+        { "id": "python", "label": "Python", "type": "tech" },
+        { "id": "fastapi", "label": "FastAPI", "type": "tech" },
+        { "id": "node", "label": "Node.js", "type": "tech" },
+        { "id": "rest", "label": "REST API", "type": "tech" },
+        { "id": "oracle", "label": "Oracle DB", "type": "tech" },
+        { "id": "etl", "label": "ETL 파이프라인", "type": "tech" },
+        { "id": "dataclean", "label": "데이터 정제·자동화", "type": "tech" },
+        { "id": "gcp", "label": "GCP", "type": "tech" },
+        { "id": "docker", "label": "Docker", "type": "tech" },
+        { "id": "git", "label": "Git / Gitea", "type": "tech" },
+        { "id": "selfhost", "label": "자체호스팅", "type": "tech" },
+        { "id": "llm", "label": "LLM", "type": "tech" },
+        { "id": "agent", "label": "AI 에이전트", "type": "tech" },
+        { "id": "stt", "label": "STT", "type": "tech" },
+        { "id": "prompt", "label": "프롬프트 엔지니어링", "type": "tech" }
+      ],
+      "links": [
+        { "source": "frontend", "target": "html" },
+        { "source": "frontend", "target": "js" },
+        { "source": "frontend", "target": "vanilla" },
+        { "source": "frontend", "target": "pdfjs" },
+
+        { "source": "backend", "target": "python" },
+        { "source": "backend", "target": "fastapi" },
+        { "source": "backend", "target": "node" },
+        { "source": "backend", "target": "rest" },
+        { "source": "backend", "target": "js" },
+
+        { "source": "data", "target": "oracle" },
+        { "source": "data", "target": "etl" },
+        { "source": "data", "target": "dataclean" },
+        { "source": "data", "target": "python" },
+
+        { "source": "cloud", "target": "gcp" },
+        { "source": "cloud", "target": "docker" },
+        { "source": "cloud", "target": "git" },
+        { "source": "cloud", "target": "selfhost" },
+
+        { "source": "ai", "target": "llm" },
+        { "source": "ai", "target": "agent" },
+        { "source": "ai", "target": "stt" },
+        { "source": "ai", "target": "prompt" },
+        { "source": "ai", "target": "python" },
+        { "source": "ai", "target": "gcp" },
+        { "source": "ai", "target": "rest" }
+      ]
+    },
     "links": [
       { "label": "Resume", "url": "resume.html", "icon": "file-text" },
       { "label": "GitHub", "url": "https://github.com/dev-jslee", "icon": "github" },
