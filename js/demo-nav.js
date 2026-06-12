@@ -10,6 +10,9 @@
   if (base.charAt(base.length - 1) !== '/') base += '/';
   var slug = base.replace(/\/+$/, '').split('/').pop();
 
+  // 썸네일 캡처 등 오버레이를 숨기고 싶을 때: URL 에 ?nonav
+  if (/[?&]nonav\b/.test(location.search)) return;
+
   fetch(base + '__nav.json', { cache: 'no-cache' })
     .then(function (r) { return r.ok ? r.json() : null; })
     .then(function (data) {
