@@ -5,6 +5,10 @@
   "scripts": {
     "admin": "node tools/admin/server.mjs",
     "serve": "python -m http.server 8765",
-    "sync-demos": "node tools/sync-demos.mjs"
+    "sync-demos": "node tools/sync-demos.mjs",
+    "shoot-thumbs": "node tools/shoot-thumbs.mjs"
+  },
+  "devDependencies": {
+    "playwright": "^1.48.0"
   }
 }

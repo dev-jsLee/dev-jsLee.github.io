@@ -106,17 +106,29 @@ function rolesFromSite(site) {
     return positions.map((p) => {
       const tech = [];
       for (const e of g.links) {
-        // 방향 무관하게 이 포지션에 인접한 노드를 모은다
-        const otherId = e.source === p.id ? e.target : e.target === p.id ? e.source : null;
+        // 방향 무관하게 이 포지션에 인접한 노드를 모은다. lane 은 행(기반 언어) 묶음용.
+        const fromPos = e.source === p.id;
+        const otherId = fromPos ? e.target : e.target === p.id ? e.source : null;
         if (otherId == null) continue;
         const node = byId.get(otherId);
-        tech.push(node ? node.label ?? otherId : otherId);
+        tech.push({ id: otherId, label: node ? node.label ?? otherId : otherId, lane: e.lane ?? null });
       }
       return { position: p.label ?? p.id, icon: p.icon, tech, emphasis: !!p.emphasis };
     });
   }
-  // 레거시 roles 폴백
-  if (Array.isArray(site.roles)) return site.roles.filter((r) => r && r.position);
+  // 레거시 roles 폴백 — tech 문자열을 객체로 정규화
+  if (Array.isArray(site.roles)) {
+    return site.roles
+      .filter((r) => r && r.position)
+      .map((r) => ({
+        position: r.position,
+        icon: r.icon,
+        emphasis: !!r.emphasis,
+        tech: (Array.isArray(r.tech) ? r.tech : []).map((t) =>
+          typeof t === 'string' ? { id: null, label: t, lane: null } : t
+        ),
+      }));
+  }
   return [];
 }
 
@@ -163,15 +175,41 @@ function renderRoles(site) {
     });
     const tech = Array.isArray(roles[i].tech) ? roles[i].tech : [];
     panel.innerHTML = '';
-    for (const item of tech) {
-      const chip = document.createElement('span');
-      chip.className = 'stack-chip';
-      chip.textContent = item;
-      panel.appendChild(chip);
+    // lane 이 있으면 기반 언어별로 한 행씩(기반 언어를 맨 왼쪽), 없으면 평칩 wrap
+    const grouped = tech.some((t) => t && t.lane);
+    panel.classList.toggle('role-panel--grouped', grouped);
+    if (grouped) {
+      const order = [];
+      const byLane = new Map();
+      for (const t of tech) {
+        const key = t.lane || `solo:${t.label}`;
+        if (!byLane.has(key)) {
+          byLane.set(key, []);
+          order.push(key);
+        }
+        byLane.get(key).push(t);
+      }
+      for (const key of order) {
+        const lane = document.createElement('div');
+        lane.className = 'role-lane';
+        for (const t of byLane.get(key)) lane.appendChild(makeChip(t));
+        panel.appendChild(lane);
+      }
+    } else {
+      for (const t of tech) panel.appendChild(makeChip(t));
     }
     // 전환 페이드: 다시 그린 뒤 다음 프레임에 보이게
     panel.classList.remove('is-shown');
     requestAnimationFrame(() => panel.classList.add('is-shown'));
+  }
+
+  // 칩 생성 — 기반 언어(lane 의 base)면 is-base 로 살짝 강조
+  function makeChip(t) {
+    const chip = document.createElement('span');
+    chip.className = 'stack-chip';
+    if (t.lane && t.id === t.lane) chip.classList.add('is-base');
+    chip.textContent = t.label;
+    return chip;
   }
 
   roles.forEach((role, i) => {
@@ -347,24 +385,34 @@ const CARD_ACCENTS = [
 function makeThumb(card) {
   const thumb = document.createElement('div');
   thumb.className = 'project-thumb';
-  if (card.thumbnail) {
+  // 명시 thumbnail 우선, 없으면 관례 경로(assets/thumbs/<slug>.png) 자동 시도.
+  // 파일이 없으면 onerror 로 placeholder 로 폴백 — 사이트가 깨지지 않는다.
+  const src = card.thumbnail || (card.slug ? `assets/thumbs/${card.slug}.png` : null);
+  if (src) {
     const img = document.createElement('img');
-    img.src = card.thumbnail;
+    img.src = src;
     img.alt = (card.title || card.slug) + ' 미리보기';
     img.loading = 'lazy';
+    img.addEventListener('error', () => fillThumbPlaceholder(thumb, card));
     thumb.appendChild(img);
   } else {
-    thumb.classList.add('placeholder');
-    const label = document.createElement('span');
-    label.textContent = 'thumbnail';
-    thumb.appendChild(label);
-    // faint icon watermark
-    const wm = document.createElement('i');
-    wm.setAttribute('data-lucide', card.icon ?? 'folder');
-    wm.className = 'icon-watermark';
-    thumb.appendChild(wm);
+    fillThumbPlaceholder(thumb, card);
   }
   return thumb;
+}
+
+function fillThumbPlaceholder(thumb, card) {
+  thumb.innerHTML = '';
+  thumb.classList.add('placeholder');
+  const label = document.createElement('span');
+  label.textContent = 'thumbnail';
+  thumb.appendChild(label);
+  // faint icon watermark
+  const wm = document.createElement('i');
+  wm.setAttribute('data-lucide', card.icon ?? 'folder');
+  wm.className = 'icon-watermark';
+  thumb.appendChild(wm);
+  if (window.lucide) window.lucide.createIcons();
 }
 
 function renderCard(card) {

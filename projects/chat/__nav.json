@@ -1,0 +1,45 @@
+{
+  "slug": "chat",
+  "pages": [
+    {
+      "path": "index.html",
+      "title": "CalDAVchat — 로그인"
+    },
+    {
+      "path": "404.html",
+      "title": "CalDAVchat — 페이지를 찾을 수 없습니다"
+    },
+    {
+      "path": "calendar.html",
+      "title": "CalDAVchat — 캘린더"
+    },
+    {
+      "path": "chat.html",
+      "title": "CalDAVchat — 채팅"
+    },
+    {
+      "path": "event-cancel.html",
+      "title": "CalDAVchat — 일정 취소"
+    },
+    {
+      "path": "event-create.html",
+      "title": "CalDAVchat — 일정 생성"
+    },
+    {
+      "path": "event-detail.html",
+      "title": "CalDAVchat — 일정 상세"
+    },
+    {
+      "path": "profile.html",
+      "title": "CalDAVchat — 프로필"
+    },
+    {
+      "path": "search.html",
+      "title": "CalDAVchat — 검색"
+    },
+    {
+      "path": "share.html",
+      "title": "CalDAVchat — 공유된 일정"
+    }
+  ]
+}

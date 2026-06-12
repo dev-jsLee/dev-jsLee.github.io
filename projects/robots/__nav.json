@@ -1,0 +1,21 @@
+{
+  "slug": "robots",
+  "pages": [
+    {
+      "path": "index.html",
+      "title": "Soul Fingerprint — robots.txt Directory"
+    },
+    {
+      "path": "admin-login.html",
+      "title": "관리자 로그인 — Soul Fingerprint"
+    },
+    {
+      "path": "admin.html",
+      "title": "관리 — Soul Fingerprint"
+    },
+    {
+      "path": "site.html",
+      "title": "Site Detail — Soul Fingerprint"
+    }
+  ]
+}

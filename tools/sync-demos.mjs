@@ -18,11 +18,15 @@ const OUT_ROOT = path.join(ROOT, 'projects');
 
 // slug = manifest 의 프로젝트 slug(서빙 경로 projects/<slug>/), repo = _src 안 클론 폴더명,
 // src = 그 repo 안에서 정적 프론트가 있는 하위 경로, fixAbsolute = 선행 슬래시 경로 보정 여부.
+// nav = 좌측 "디자인 리뷰" 사이트맵 오버레이 주입 여부(멀티페이지 데모만; graph 는 단일 페이지라 제외).
 const CONFIG = [
-  { slug: 'chat', repo: 'calDAVchat', src: 'frontend', fixAbsolute: true },
-  { slug: 'graph', repo: 'funcSound', src: '.', fixAbsolute: false },
-  { slug: 'robots', repo: 'soul-fingerprint', src: 'frontend', fixAbsolute: true },
+  { slug: 'chat', repo: 'calDAVchat', src: 'frontend', fixAbsolute: true, nav: true },
+  { slug: 'graph', repo: 'funcSound', src: '.', fixAbsolute: false, nav: false },
+  { slug: 'robots', repo: 'soul-fingerprint', src: 'frontend', fixAbsolute: true, nav: true },
 ];
+
+// CONFIG(_src 기반)에 없지만 이미 vendoring 된 데모 — nav 오버레이만 in-place 주입.
+const NAV_ONLY = ['tams'];
 
 // 복사 허용 확장자(정적 웹 자산만)
 const ALLOW_EXT = new Set([
@@ -88,6 +92,63 @@ function applyFixups(destDir, slug) {
   }
 }
 
+// ---- demo-nav 사이트맵 오버레이 주입 -------------------------------------
+const NAV_MARKER = '<!-- demo-nav -->';
+// 기존 주입 블록(마커 + script) — 멱등 재주입을 위해 먼저 제거한다.
+const NAV_STRIP_RE = /\n?[ \t]*<!-- demo-nav -->\s*<script[^>]*data-demo-base[^>]*><\/script>/gi;
+
+function listHtmlDocs(dir) {
+  const out = [];
+  (function walk(d) {
+    for (const entry of fs.readdirSync(d, { withFileTypes: true })) {
+      const full = path.join(d, entry.name);
+      if (entry.isDirectory()) {
+        if (SKIP_DIR.has(entry.name)) continue;
+        walk(full);
+      } else if (/\.html?$/i.test(entry.name)) {
+        out.push(full);
+      }
+    }
+  })(dir);
+  return out;
+}
+
+function titleOf(html) {
+  const m = html.match(/<title[^>]*>([\s\S]*?)<\/title>/i);
+  return m ? m[1].replace(/\s+/g, ' ').trim() : '';
+}
+
+// dir 안 완전한 HTML 문서에 오버레이 script 를 주입하고, 페이지 목록 __nav.json 을 생성한다.
+function injectNav(dir, slug) {
+  if (!fs.existsSync(dir)) {
+    console.warn(`    ⚠ nav 대상 없음: projects/${slug} — 건너뜀`);
+    return;
+  }
+  const base = `/projects/${slug}/`;
+  const tag = `${NAV_MARKER}<script defer src="/js/demo-nav.js" data-demo-base="${base}"></script>`;
+  const pages = [];
+  let injected = 0;
+
+  for (const file of listHtmlDocs(dir)) {
+    const rel = path.relative(dir, file).split(path.sep).join('/');
+    if (rel.includes('/components/')) continue; // 프래그먼트 제외(목록·주입 모두)
+    let html = fs.readFileSync(file, 'utf8');
+    if (!/<\/body>/i.test(html)) continue; // 완전한 문서만
+    pages.push({ path: rel, title: titleOf(html) });
+    html = html.replace(NAV_STRIP_RE, ''); // 기존 주입 제거(멱등)
+    html = html.replace(/<\/body>/i, `\n${tag}\n</body>`);
+    fs.writeFileSync(file, html);
+    injected++;
+  }
+
+  // index.html 먼저, 그다음 경로순
+  pages.sort((a, b) =>
+    a.path === 'index.html' ? -1 : b.path === 'index.html' ? 1 : a.path.localeCompare(b.path)
+  );
+  fs.writeFileSync(path.join(dir, '__nav.json'), JSON.stringify({ slug, pages }, null, 2));
+  console.log(`    ↳ demo-nav 주입 ${injected}개 페이지 + __nav.json`);
+}
+
 function gitPull(repoDir) {
   try {
     const out = execFileSync('git', ['-C', repoDir, 'pull', '--ff-only'], { encoding: 'utf8' });
@@ -123,6 +184,15 @@ function main() {
     if (cfg.fixAbsolute) applyFixups(outDir, cfg.slug);
     total += n;
     console.log(`    ↳ ${n}개 파일 복사 → projects/${cfg.slug}/${cfg.fixAbsolute ? ' (경로 보정)' : ''}`);
+  }
+
+  // nav 오버레이 주입 — vendoring 산출물에 in-place 로(복사 여부·_src 유무와 무관, 멱등).
+  // 대상: CONFIG 의 nav:true + NAV_ONLY(_src 기반 아닌 기존 데모).
+  const navSlugs = [...CONFIG.filter((c) => c.nav).map((c) => c.slug), ...NAV_ONLY];
+  console.log('\n• demo-nav 사이트맵 주입');
+  for (const slug of navSlugs) {
+    console.log(`  - ${slug}`);
+    injectNav(path.join(OUT_ROOT, slug), slug);
   }
 
   console.log(`\n완료: 총 ${total}개 파일.`);

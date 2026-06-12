@@ -1,0 +1,69 @@
+{
+  "slug": "tams",
+  "pages": [
+    {
+      "path": "index.html",
+      "title": "TAMS - 보충지도 관리 시스템"
+    },
+    {
+      "path": "html/admin/dashboard.html",
+      "title": "관리자 대시보드 - TAMS"
+    },
+    {
+      "path": "html/admin/schedules.html",
+      "title": "일정표 - TAMS"
+    },
+    {
+      "path": "html/admin/statistics.html",
+      "title": "통계 - TAMS"
+    },
+    {
+      "path": "html/admin/subjects.html",
+      "title": "과목 관리 - TAMS"
+    },
+    {
+      "path": "html/admin/tutors.html",
+      "title": "조교 관리 - TAMS"
+    },
+    {
+      "path": "html/admin/users.html",
+      "title": "계정 관리 - TAMS"
+    },
+    {
+      "path": "html/login.html",
+      "title": "로그인 - TAMS"
+    },
+    {
+      "path": "html/mentor/appointments.html",
+      "title": "신청 현황 - TAMS"
+    },
+    {
+      "path": "html/mentor/dashboard.html",
+      "title": "멘토 대시보드 - TAMS"
+    },
+    {
+      "path": "html/mentor/schedule.html",
+      "title": "보충 신청 - TAMS"
+    },
+    {
+      "path": "html/mentor/students.html",
+      "title": "학생 관리 - TAMS"
+    },
+    {
+      "path": "html/tutor/calendar.html",
+      "title": "내 일정 - TAMS"
+    },
+    {
+      "path": "html/tutor/dashboard.html",
+      "title": "조교 대시보드 - TAMS"
+    },
+    {
+      "path": "html/tutor/pending.html",
+      "title": "승인 대기 - TAMS"
+    },
+    {
+      "path": "html/tutor/settings.html",
+      "title": "설정 - TAMS"
+    }
+  ]
+}
