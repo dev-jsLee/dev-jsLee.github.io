@@ -327,6 +327,19 @@ section h2::before {
   outline-offset: 2px;
 }
 
+/* 자신 있는 포지션 강조 — 비활성 상태에서도 도드라지게 (활성은 배경으로 구분) */
+.role-tab--strong {
+  color: var(--accent);
+  border-color: var(--accent-line);
+  font-weight: 600;
+}
+
+.role-badge {
+  width: 0.8rem;
+  height: 0.8rem;
+  color: var(--accent);
+}
+
 .role-panel {
   display: flex;
   flex-wrap: wrap;

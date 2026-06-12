@@ -112,7 +112,7 @@ function rolesFromSite(site) {
         const node = byId.get(otherId);
         tech.push(node ? node.label ?? otherId : otherId);
       }
-      return { position: p.label ?? p.id, icon: p.icon, tech };
+      return { position: p.label ?? p.id, icon: p.icon, tech, emphasis: !!p.emphasis };
     });
   }
   // 레거시 roles 폴백
@@ -186,6 +186,15 @@ function renderRoles(site) {
       tab.appendChild(icon);
     }
     tab.appendChild(document.createTextNode(role.position));
+    // 자신 있는 포지션: 스파클 배지 + 강조 스타일
+    if (role.emphasis) {
+      tab.classList.add('role-tab--strong');
+      tab.title = '자신 있는 분야';
+      const badge = document.createElement('i');
+      badge.setAttribute('data-lucide', 'sparkles');
+      badge.className = 'icon role-badge';
+      tab.appendChild(badge);
+    }
     tab.addEventListener('mouseenter', () => setActive(i));
     tab.addEventListener('focus', () => setActive(i));
     tab.addEventListener('click', () => setActive(i));
